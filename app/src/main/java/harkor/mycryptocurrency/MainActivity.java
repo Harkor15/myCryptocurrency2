@@ -10,4 +10,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+    public int testOfTesting(int number){
+        return number*10;
+    }
+    public boolean isMoreThanZero(int number){
+        if(number>0){
+            return true;
+        }
+        return false;
+    }
 }
