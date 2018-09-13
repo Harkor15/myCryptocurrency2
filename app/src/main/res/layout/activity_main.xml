@@ -6,4 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <TextView
+        android:id="@+id/text_money_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$1000"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="54sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_background_color"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/image_add"
+        app:srcCompat="@android:color/holo_green_light" />
+
+    <ImageView
+        android:id="@+id/image_settings"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_add"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/icons_settings" />
+
+    <ImageView
+        android:id="@+id/image_add"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/image_refresh"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/image_settings"
+        app:srcCompat="@drawable/icons_add" />
+
+    <ImageView
+        android:id="@+id/image_refresh"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:cropToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/image_add"
+        app:srcCompat="@drawable/icons_refresh" />
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/image_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_money_amount"
+        app:layout_constraintVertical_bias="1.0" />
+
 </android.support.constraint.ConstraintLayout>
