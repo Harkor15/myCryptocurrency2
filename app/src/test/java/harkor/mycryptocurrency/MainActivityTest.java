@@ -2,6 +2,8 @@ package harkor.mycryptocurrency;
 
 import org.junit.Test;
 
+import harkor.mycryptocurrency.view.MainActivity;
+
 import static org.junit.Assert.*;
 
 public class MainActivityTest {
