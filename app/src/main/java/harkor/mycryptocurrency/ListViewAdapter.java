@@ -1,11 +1,13 @@
 package harkor.mycryptocurrency;
 
 import android.content.Context;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.LinkedList;
@@ -47,7 +49,7 @@ public class ListViewAdapter extends BaseAdapter{
 
         name.setText(names.get(i));
         amount.setText(""+amounts.get(i));
-        Log.d("MyCrypto",names.get(1));
+
         return view;
     }
 }
