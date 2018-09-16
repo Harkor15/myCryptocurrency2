@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import java.util.LinkedList;
 
+import harkor.mycryptocurrency.DatabaseController;
 import harkor.mycryptocurrency.ListViewAdapter;
 import harkor.mycryptocurrency.R;
 
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listView=findViewById(R.id.list);
         loadListView();
+        DatabaseController databaseController=new DatabaseController(getApplicationContext());
 
     }
     public void loadListView(){

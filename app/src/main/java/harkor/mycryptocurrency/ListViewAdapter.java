@@ -21,7 +21,6 @@ public class ListViewAdapter extends BaseAdapter{
         this.context = context;
         this.amounts=(LinkedList<Double>)amounts.clone();
         this.names=(LinkedList<String>)names.clone();
-
     }
 
     @Override
