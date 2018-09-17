@@ -9,6 +9,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQuery;
 import android.util.Log;
 
+import java.util.LinkedList;
+
+import harkor.mycryptocurrency.model.Cryptocurrency;
+
 public class DatabaseController extends SQLiteOpenHelper {
 
     public static final String SQL_CREATE="CREATE TABLE " + FeedDatabase.TABLE_NAME+" ("+
@@ -59,8 +63,46 @@ public class DatabaseController extends SQLiteOpenHelper {
                 selectionArgs);
         db.close();
     }
-
-
+    public LinkedList<Cryptocurrency> fullTable(){
+        SQLiteDatabase db = getReadableDatabase();
+        String sortOrder= FeedDatabase.COLUMN_NAME_ID+" ASC";
+        Cursor cursor=db.query(FeedDatabase.TABLE_NAME,null,null,
+                null,null,null,sortOrder);
+        LinkedList<Cryptocurrency> table=new LinkedList<>();
+        while(cursor.moveToNext()){
+            Cryptocurrency crypto=new Cryptocurrency(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_TAG)),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_AMOUNT)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_DATE)),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_USD)),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_EUR)),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_PLN))
+            );
+            table.add(crypto);
+        }
+        cursor.close();
+        db.close();
+        return table;
+    }
+    public LinkedList<Cryptocurrency> smallTable() {
+        SQLiteDatabase db = getReadableDatabase();
+        String sortOrder = FeedDatabase.COLUMN_NAME_ID + " ASC";
+        Cursor cursor = db.query(FeedDatabase.TABLE_NAME, null, null,
+                null, null, null, sortOrder);
+        LinkedList<Cryptocurrency> table = new LinkedList<>();
+        while (cursor.moveToNext()) {
+            Cryptocurrency crypto = new Cryptocurrency(
+                    cursor.getInt(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_TAG)),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_AMOUNT))
+            );
+            table.add(crypto);
+        }
+        cursor.close();
+        db.close();
+        return table;
+    }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
