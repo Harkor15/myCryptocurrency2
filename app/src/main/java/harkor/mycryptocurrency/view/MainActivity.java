@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.LinkedList;
@@ -16,13 +17,21 @@ import harkor.mycryptocurrency.R;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
-
+    ImageView imageAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         listView=findViewById(R.id.list);
+        imageAdd=findViewById(R.id.image_add);
+        imageAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogAdd dialogAdd=new DialogAdd();
+                dialogAdd.show(getFragmentManager(), "missiles");
+            }
+        });
         loadListView();
         DatabaseController databaseController=new DatabaseController(getApplicationContext());
 
@@ -42,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }
