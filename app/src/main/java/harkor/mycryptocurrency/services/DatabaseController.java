@@ -1,4 +1,4 @@
-package harkor.mycryptocurrency;
+package harkor.mycryptocurrency.services;
 
 import android.content.ContentValues;
 import android.content.Context;

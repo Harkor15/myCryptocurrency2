@@ -1,6 +1,5 @@
 package harkor.mycryptocurrency.view;
 
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,13 +10,16 @@ import android.widget.ListView;
 
 import java.util.LinkedList;
 
-import harkor.mycryptocurrency.DatabaseController;
+import harkor.mycryptocurrency.services.DatabaseController;
 import harkor.mycryptocurrency.ListViewAdapter;
 import harkor.mycryptocurrency.R;
+import harkor.mycryptocurrency.services.RetrofitClientInstance;
+import harkor.mycryptocurrency.services.RetrofitInterface;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
-    ImageView imageAdd;
+    ImageView imageAdd, imageRefresh;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +27,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         listView=findViewById(R.id.list);
         imageAdd=findViewById(R.id.image_add);
+        imageRefresh=findViewById(R.id.image_refresh);
         imageAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogAdd dialogAdd=new DialogAdd();
                 dialogAdd.show(getFragmentManager(), "missiles");
+            }
+        });
+        imageRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RetrofitInterface retrofitInterface=new RetrofitInterface();
+                retrofitInterface.multiCrypto("BTC,LTC,ETH");
+
             }
         });
         loadListView();
