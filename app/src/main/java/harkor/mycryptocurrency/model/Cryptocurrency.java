@@ -10,8 +10,9 @@ public class Cryptocurrency {
     double priceUsd;
     double priceEur;
     double pricePln;
+    double priceBtc;
 
-    public Cryptocurrency(int id, String tag, double amount, String date, double priceUsd, double priceEur, double pricePln) {
+    public Cryptocurrency(int id, String tag, double amount, String date, double priceUsd, double priceEur, double pricePln,double priceBtc) {
         this.id = id;
         this.tag = tag;
         this.amount = amount;
@@ -19,6 +20,7 @@ public class Cryptocurrency {
         this.priceUsd = priceUsd;
         this.priceEur = priceEur;
         this.pricePln = pricePln;
+        this.priceBtc = priceBtc;
     }
 
     public Cryptocurrency(int id, String tag, double amount) {

@@ -1,9 +1,6 @@
 package harkor.mycryptocurrency;
 
-import java.util.List;
 import java.util.Map;
-
-import harkor.mycryptocurrency.model.CryptoList;
 import harkor.mycryptocurrency.model.CryptoPrices;
 import retrofit2.Call;
 import retrofit2.http.GET;

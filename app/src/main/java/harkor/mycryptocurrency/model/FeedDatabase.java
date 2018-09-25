@@ -12,4 +12,5 @@ public class FeedDatabase {
     public static final String COLUMN_NAME_PRICE_USD="priceusd";
     public static final String COLUMN_NAME_PRICE_EUR="priceeur";
     public static final String COLUMN_NAME_PRICE_PLN="pricepln";
+    public static final String COLUMN_NAME_PRICE_BTC="pricebtc";
 }

@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import java.util.LinkedList;
 
+import harkor.mycryptocurrency.CryptoAdd;
 import harkor.mycryptocurrency.services.DatabaseController;
 import harkor.mycryptocurrency.ListViewAdapter;
 import harkor.mycryptocurrency.R;
@@ -38,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         imageRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RetrofitInterface retrofitInterface=new RetrofitInterface();
-                retrofitInterface.multiCrypto("BTC,LTC,ETH");
+                //RetrofitInterface retrofitInterface=new RetrofitInterface();
+                //retrofitInterface.multiCrypto("BTC,LTC,ETH");
 
             }
         });
@@ -62,7 +63,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 
 }

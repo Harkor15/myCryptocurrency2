@@ -6,4 +6,5 @@
     <string name="eg_amount">e.g. 0.512</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="db_addes">Success!</string>
 </resources>

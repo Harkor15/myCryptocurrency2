@@ -6,14 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 
+import harkor.mycryptocurrency.R;
 import harkor.mycryptocurrency.model.Cryptocurrency;
 import harkor.mycryptocurrency.model.FeedDatabase;
 
 public class DatabaseController extends SQLiteOpenHelper {
-
+    Context context;
     public static final String SQL_CREATE="CREATE TABLE " + FeedDatabase.TABLE_NAME+" ("+
             FeedDatabase.COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             FeedDatabase.COLUMN_NAME_TAG + " TEXT, " +
@@ -21,7 +23,8 @@ public class DatabaseController extends SQLiteOpenHelper {
             FeedDatabase.COLUMN_NAME_DATE + " DATE, " +
             FeedDatabase.COLUMN_NAME_PRICE_USD + " DOUBLE, " +
             FeedDatabase.COLUMN_NAME_PRICE_EUR + " DOUBLE, " +
-            FeedDatabase.COLUMN_NAME_PRICE_PLN + " DOUBLE )";
+            FeedDatabase.COLUMN_NAME_PRICE_PLN + " DOUBLE, " +
+            FeedDatabase.COLUMN_NAME_PRICE_BTC + " DOUBLE)" ;
     private static final String SQL_DELETE ="DROP TABLE IF EXISTS " + FeedDatabase.TABLE_NAME;
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "Cryptocurrency.db";
@@ -29,8 +32,9 @@ public class DatabaseController extends SQLiteOpenHelper {
 
     public DatabaseController(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context=context;
     }
-    public void addCrypto(String tag, String amount, String date, String priceUsd,String priceEur,String pricePln){
+    public void addCrypto(String tag, double amount, String date, double priceUsd,double priceEur,double pricePln,double priceBtc){
         SQLiteDatabase db=getWritableDatabase();
         ContentValues values=new ContentValues();
         values.put(FeedDatabase.COLUMN_NAME_TAG,tag);
@@ -39,8 +43,12 @@ public class DatabaseController extends SQLiteOpenHelper {
         values.put(FeedDatabase.COLUMN_NAME_PRICE_USD,priceUsd);
         values.put(FeedDatabase.COLUMN_NAME_PRICE_EUR,priceEur);
         values.put(FeedDatabase.COLUMN_NAME_PRICE_PLN,pricePln);
+        values.put(FeedDatabase.COLUMN_NAME_PRICE_BTC,priceBtc);
         db.insert(FeedDatabase.TABLE_NAME,null,values);
         db.close();
+        Log.d("MyCrypto", "DB add success!");
+        Toast.makeText(context, R.string.db_addes,Toast.LENGTH_SHORT).show();
+
     }
     public void deleteCrypto(int id){
         SQLiteDatabase db=getWritableDatabase();
@@ -76,7 +84,8 @@ public class DatabaseController extends SQLiteOpenHelper {
                     cursor.getString(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_DATE)),
                     cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_USD)),
                     cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_EUR)),
-                    cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_PLN))
+                    cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_PLN)),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_BTC))
             );
             table.add(crypto);
         }
@@ -105,10 +114,8 @@ public class DatabaseController extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        SQLiteDatabase db=getWritableDatabase();
-        db.execSQL(SQL_CREATE);
+        sqLiteDatabase.execSQL(SQL_CREATE);
         Log.d("MyCrypto","Database created!");
-        db.close();
     }
 
     @Override
