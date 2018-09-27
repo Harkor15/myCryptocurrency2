@@ -8,16 +8,19 @@ import java.util.Date;
 
 import harkor.mycryptocurrency.CryptoAdd;
 import harkor.mycryptocurrency.model.CryptoPrices;
+import harkor.mycryptocurrency.model.ListRefresh;
 
 public class CryptoCheckAdd {
     String name;
     double amount;
     CryptoAdd cryptoAdd;
+    ListRefresh listRefresh;
 
-    public CryptoCheckAdd(String name, double amount, CryptoAdd cryptoAdd) {
+    public CryptoCheckAdd(String name, double amount, CryptoAdd cryptoAdd,ListRefresh listRefresh) {
         this.name = name;
         this.amount = amount;
         this.cryptoAdd =cryptoAdd;
+        this.listRefresh=listRefresh;
     }
 
     public void check(){
@@ -32,7 +35,10 @@ public class CryptoCheckAdd {
             Log.d("MyCrypto", "Add! "+name+" "+cryptoPrices.getPriceUSD());
             Date date =new Date();
             SimpleDateFormat df=new SimpleDateFormat("yyyy.MM.dd");
-            cryptoAdd.dbAddNewCrypto(name,amount,df.format(date),cryptoPrices.getPriceUSD(),cryptoPrices.getPriceEUR(),cryptoPrices.getPricePLN(),cryptoPrices.getPriceBTC());
+            cryptoAdd.dbAddNewCrypto(name,amount,df.format(date),cryptoPrices.getPriceUSD(),
+                    cryptoPrices.getPriceEUR(),cryptoPrices.getPricePLN(),cryptoPrices.getPriceBTC());
+            listRefresh.refresh();
+
         }
 
     }

@@ -11,13 +11,15 @@ import android.widget.ListView;
 import java.util.LinkedList;
 
 import harkor.mycryptocurrency.CryptoAdd;
+import harkor.mycryptocurrency.model.ListRefresh;
 import harkor.mycryptocurrency.services.DatabaseController;
 import harkor.mycryptocurrency.ListViewAdapter;
 import harkor.mycryptocurrency.R;
 import harkor.mycryptocurrency.services.RetrofitClientInstance;
 import harkor.mycryptocurrency.services.RetrofitInterface;
+import harkor.mycryptocurrency.viewmodel.ListDataEditor;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ListRefresh{
     ListView listView;
     ImageView imageAdd, imageRefresh, imageSettings;
 
@@ -51,17 +53,19 @@ public class MainActivity extends AppCompatActivity {
                 new DialogSettings().show(getFragmentManager(),"settings");
             }
         });
-        loadListView();
-        DatabaseController databaseController=new DatabaseController(getApplicationContext());
+
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadListView();
+    }
+
     public void loadListView(){
-        LinkedList<String> n=new LinkedList<>();
-        LinkedList<Double> a=new LinkedList<>();
-        n.add("LSK");a.add(5.0);n.add("BTC");a.add(0.01);n.add("LSK");a.add(5.0);n.add("BTC");a.add(0.01);
-        n.add("LSK");a.add(5.0);n.add("BTC");a.add(0.01);n.add("LSK");a.add(5.0);n.add("BTC");a.add(0.01);
-        n.add("LSK");a.add(5.0);n.add("BTC");a.add(0.01);n.add("LSK");a.add(5.0);n.add("BTC");a.add(0.01);
-        ListViewAdapter listViewAdapter=new ListViewAdapter(this,n,a);
+        ListDataEditor listDataEditor=new ListDataEditor(new DatabaseController(getApplicationContext()));
+        ListViewAdapter listViewAdapter=new ListViewAdapter(this,listDataEditor.getNames(),listDataEditor.getAmounts());
         listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -71,4 +75,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void refresh() {
+        loadListView();
+    }
 }

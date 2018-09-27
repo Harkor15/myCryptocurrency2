@@ -19,7 +19,7 @@ public class DatabaseController extends SQLiteOpenHelper {
     public static final String SQL_CREATE="CREATE TABLE " + FeedDatabase.TABLE_NAME+" ("+
             FeedDatabase.COLUMN_NAME_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             FeedDatabase.COLUMN_NAME_TAG + " TEXT, " +
-            FeedDatabase.COLUMN_NAME_AMOUNT + "DOUBLE, " +
+            FeedDatabase.COLUMN_NAME_AMOUNT + " DOUBLE, " +
             FeedDatabase.COLUMN_NAME_DATE + " DATE, " +
             FeedDatabase.COLUMN_NAME_PRICE_USD + " DOUBLE, " +
             FeedDatabase.COLUMN_NAME_PRICE_EUR + " DOUBLE, " +

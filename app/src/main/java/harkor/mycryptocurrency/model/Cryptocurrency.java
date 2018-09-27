@@ -3,14 +3,14 @@ package harkor.mycryptocurrency.model;
 import java.util.LinkedList;
 
 public class Cryptocurrency {
-    int id;
-    String tag;
-    double amount;
-    String date;
-    double priceUsd;
-    double priceEur;
-    double pricePln;
-    double priceBtc;
+    public int id;
+    public String tag;
+    public double amount;
+    public String date;
+    public double priceUsd;
+    public double priceEur;
+    public double pricePln;
+    public double priceBtc;
 
     public Cryptocurrency(int id, String tag, double amount, String date, double priceUsd, double priceEur, double pricePln,double priceBtc) {
         this.id = id;

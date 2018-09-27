@@ -13,10 +13,12 @@ import android.widget.EditText;
 
 import harkor.mycryptocurrency.CryptoAdd;
 import harkor.mycryptocurrency.R;
+import harkor.mycryptocurrency.model.ListRefresh;
 import harkor.mycryptocurrency.services.CryptoCheckAdd;
 import harkor.mycryptocurrency.services.DatabaseController;
 
 public class DialogAdd extends DialogFragment implements CryptoAdd{
+
 
 Context context;
     @Override
@@ -44,7 +46,7 @@ Context context;
                     double amount;
                     try{
                         amount= Double.parseDouble(amountS);
-                        CryptoCheckAdd cryptoCheckAdd=new CryptoCheckAdd(name,amount,cryptoAdd);
+                        CryptoCheckAdd cryptoCheckAdd=new CryptoCheckAdd(name,amount,cryptoAdd,(ListRefresh)getActivity());
                         cryptoCheckAdd.check();
                     }catch (Error e){
                         Log.d("MyCrypto","name error");

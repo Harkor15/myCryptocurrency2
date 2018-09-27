@@ -3,7 +3,6 @@ package harkor.mycryptocurrency.model;
 public class FeedDatabase {
     private FeedDatabase(){
         }
-
     public static final String TABLE_NAME="cryptocurrency";
     public static final String COLUMN_NAME_ID="id";
     public static final String COLUMN_NAME_TAG="tag";
