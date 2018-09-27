@@ -7,4 +7,9 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="db_addes">Success!</string>
+    <string name="default_currency" > Default currency</string>
+    <string name="btc">BTC</string>
+    <string name="usd">USD</string>
+    <string name="eur">EUR</string>
+    <string name="pln">PLN</string>
 </resources>

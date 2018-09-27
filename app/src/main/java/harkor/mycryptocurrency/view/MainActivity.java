@@ -19,7 +19,7 @@ import harkor.mycryptocurrency.services.RetrofitInterface;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
-    ImageView imageAdd, imageRefresh;
+    ImageView imageAdd, imageRefresh, imageSettings;
 
 
     @Override
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         listView=findViewById(R.id.list);
         imageAdd=findViewById(R.id.image_add);
         imageRefresh=findViewById(R.id.image_refresh);
+        imageSettings=findViewById(R.id.image_settings);
         imageAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
                 //RetrofitInterface retrofitInterface=new RetrofitInterface();
                 //retrofitInterface.multiCrypto("BTC,LTC,ETH");
 
+            }
+        });
+        imageSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DialogSettings().show(getFragmentManager(),"settings");
             }
         });
         loadListView();
