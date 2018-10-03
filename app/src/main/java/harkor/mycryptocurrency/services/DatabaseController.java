@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.FractionRes;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -110,6 +111,33 @@ public class DatabaseController extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return table;
+    }
+    public Cryptocurrency singleCrypto(int id){
+        SQLiteDatabase db = getReadableDatabase();
+        String selection = FeedDatabase.COLUMN_NAME_ID + " = ?";
+        String[] selectionArgs = { ""+id };
+
+        Cursor cursor = db.query(
+                FeedDatabase.TABLE_NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+        cursor.moveToFirst();
+        Cryptocurrency crypto=new Cryptocurrency(
+                cursor.getInt(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_ID)),
+                cursor.getString(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_TAG)),
+                cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_AMOUNT)),
+                cursor.getString(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_DATE)),
+                cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_USD)),
+                cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_EUR)),
+                cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_PLN)),
+                cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_BTC))
+        );
+        return crypto;
     }
 
     @Override

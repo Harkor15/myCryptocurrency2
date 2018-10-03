@@ -12,4 +12,5 @@
     <string name="usd">USD</string>
     <string name="eur">EUR</string>
     <string name="pln">PLN</string>
+    <string name="delete">DELETE</string>
 </resources>

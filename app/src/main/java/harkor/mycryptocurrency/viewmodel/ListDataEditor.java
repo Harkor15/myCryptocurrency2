@@ -31,4 +31,8 @@ public class ListDataEditor {
         }
         return amounts;
     }
+
+    public int dbId(int number){
+        return fullCrypto.get(number).id;
+    }
 }

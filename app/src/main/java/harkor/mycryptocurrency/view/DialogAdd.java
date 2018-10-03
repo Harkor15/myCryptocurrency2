@@ -25,7 +25,6 @@ Context context;
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         final View mView=getActivity().getLayoutInflater().inflate(R.layout.add_dialog,null);
-        //final LayoutInflater inflater=getActivity().getLayoutInflater();
         final CryptoAdd cryptoAdd=this;
         context=mView.getContext();
         builder.setView(mView)
