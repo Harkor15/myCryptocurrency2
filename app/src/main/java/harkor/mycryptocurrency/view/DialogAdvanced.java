@@ -7,19 +7,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 import harkor.mycryptocurrency.R;
 import harkor.mycryptocurrency.model.Cryptocurrency;
+import harkor.mycryptocurrency.model.ListRefresh;
 import harkor.mycryptocurrency.services.DatabaseController;
 import harkor.mycryptocurrency.viewmodel.AdvancedDialogViewModel;
 
 public class DialogAdvanced extends DialogFragment implements AdvancedDialogInterface{
-    Context context;
+
     @BindView(R.id.text_name) TextView nameText;
     @BindView(R.id.text_amount) TextView amountText;
     @BindView(R.id.text_time) TextView timeText;
@@ -29,11 +33,16 @@ public class DialogAdvanced extends DialogFragment implements AdvancedDialogInte
     @BindView(R.id.text_balance_percent) TextView balancePercentText;
     @BindView(R.id.text_actual_price) TextView actualPriceText;
     @BindView(R.id.text_actual_value) TextView actualValueText;
+    @BindView(R.id.button_delete) Button deleteButton;
 
+    Context context;
+    private long mSecDelete=0;
+    private ListRefresh listRefresh;
     int cryptoID;
     int currencyTag;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        listRefresh=(ListRefresh)getActivity();
         cryptoID=getArguments().getInt("idCrypto");
         final View mView=getActivity().getLayoutInflater().inflate(R.layout.advanced_dialog,null);
         context=mView.getContext();
@@ -42,21 +51,27 @@ public class DialogAdvanced extends DialogFragment implements AdvancedDialogInte
         currencyTag=sharedPreferences.getInt("currencyCode",1);
         AdvancedDialogViewModel advancedDialogViewModel=new AdvancedDialogViewModel(this);
         advancedDialogViewModel.startViewModel();
-        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         builder.setView(mView)
-                .setNegativeButton(R.string.delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //TODO: 2 second and delete
-                    }
-                })
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        DialogAdvanced.this.getDialog().cancel();
                     }
-                });
-
+                 });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if((System.currentTimeMillis()-mSecDelete)<2000){
+                    DatabaseController db=new DatabaseController(mView.getContext());
+                    db.deleteCrypto(cryptoID);
+                    getDialog().cancel();
+                    listRefresh.refresh();
+                }else{
+                    Toast.makeText(context,R.string.tapMoreToDelete,Toast.LENGTH_SHORT).show();
+                    mSecDelete=System.currentTimeMillis();
+                }
+            }
+        });
         return builder.create();
     }
 

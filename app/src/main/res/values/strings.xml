@@ -13,4 +13,6 @@
     <string name="eur">EUR</string>
     <string name="pln">PLN</string>
     <string name="delete">DELETE</string>
+    <string name="tapMoreToDelete">Click one more time to delete</string>
+    <string name="sureDelete">Delete this crypto?</string>
 </resources>

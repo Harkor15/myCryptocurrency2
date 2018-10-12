@@ -19,10 +19,11 @@ import harkor.mycryptocurrency.services.DatabaseController;
 
 public class DialogAdd extends DialogFragment implements CryptoAdd{
 
-
+ListRefresh listRefresh;
 Context context;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        listRefresh=(ListRefresh) getActivity();
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         final View mView=getActivity().getLayoutInflater().inflate(R.layout.add_dialog,null);
         final CryptoAdd cryptoAdd=this;
@@ -50,6 +51,7 @@ Context context;
                     }catch (Error e){
                         Log.d("MyCrypto","name error");
                     }
+                    listRefresh.refresh();
                 }
             });
 
