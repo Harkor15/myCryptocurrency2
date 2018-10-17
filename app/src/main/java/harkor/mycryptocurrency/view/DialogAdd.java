@@ -43,15 +43,18 @@ Context context;
                     String name=editName.getText()+"";
                     name=name.toUpperCase();
                     String amountS=editAmount.getText()+"";
-                    double amount;
-                    try{
-                        amount= Double.parseDouble(amountS);
-                        CryptoCheckAdd cryptoCheckAdd=new CryptoCheckAdd(name,amount,cryptoAdd,(ListRefresh)getActivity());
-                        cryptoCheckAdd.check();
-                    }catch (Error e){
-                        Log.d("MyCrypto","name error");
+                    if (!amountS.equals("")) {
+                        double amount;
+                        try{
+                            amount= Double.parseDouble(amountS);
+                            CryptoCheckAdd cryptoCheckAdd=new CryptoCheckAdd(name,amount,cryptoAdd,(ListRefresh)getActivity());
+                            cryptoCheckAdd.check();
+                        }catch (Error e){
+                            Log.d("MyCrypto","name error");
+                        }
+                        listRefresh.refresh();
                     }
-                    listRefresh.refresh();
+
                 }
             });
 

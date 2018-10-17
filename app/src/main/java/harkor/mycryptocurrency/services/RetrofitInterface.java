@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Map;
 
 import harkor.mycryptocurrency.CryptoCompareClient;
+import harkor.mycryptocurrency.MultiResponseForMoneyCalc;
 import harkor.mycryptocurrency.SingleResponseForAdvanced;
 import harkor.mycryptocurrency.model.CryptoPrices;
 import retrofit2.Call;
@@ -58,16 +59,17 @@ public class RetrofitInterface {
             }
         });
     }
-    public void multiCrypto(String names){
+    public void multiCrypto(String names, final MultiResponseForMoneyCalc mrfmc){
         CryptoCompareClient client=retrofit.create(CryptoCompareClient.class);
         Call<Map<String,CryptoPrices>> call=client.multiCryptoPrices(names,CURRENCY);
         call.enqueue(new Callback<Map<String,CryptoPrices>>() {
             @Override
             public void onResponse(Call<Map<String,CryptoPrices>> call, Response<Map<String,CryptoPrices>> response) {
                 Map<String,CryptoPrices> map=response.body();
-                Collection<CryptoPrices> col=map.values();
-                CryptoPrices cP=map.get("BTC");
-                Log.d("MyCrypto", "succes retrof "+cP.getPriceUSD()  );
+                //Collection<CryptoPrices> col=map.values();
+                //CryptoPrices cP=map.get("BTC");
+                //Log.d("MyCrypto", "succes retrof "+cP.getPriceUSD()  );
+                mrfmc.giveResponseToCalc(map);
             }
 
             @Override

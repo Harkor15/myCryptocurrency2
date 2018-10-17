@@ -1,5 +1,7 @@
 package harkor.mycryptocurrency.view;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import harkor.mycryptocurrency.MoneyCalc;
 import harkor.mycryptocurrency.OverallPrice;
 import harkor.mycryptocurrency.model.ListRefresh;
 import harkor.mycryptocurrency.services.DatabaseController;
@@ -33,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements ListRefresh,Overa
     }
     @OnClick(R.id.image_refresh)
     public void onClickRefresh(){
-
-
+        MoneyCalc moneyCalc=new MoneyCalc(new DatabaseController(getApplicationContext()),this);
+        moneyCalc.goGoGo();
     }
     @OnClick(R.id.image_settings)
     public void onClickSettings(){
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements ListRefresh,Overa
 
     public void loadListView(){
         final ListDataEditor listDataEditor=new ListDataEditor(new DatabaseController(getApplicationContext()));
-
+        onClickRefresh();
         ListViewAdapter listViewAdapter=new ListViewAdapter(this,listDataEditor.getNames(),listDataEditor.getAmounts());
         listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,5 +85,12 @@ public class MainActivity extends AppCompatActivity implements ListRefresh,Overa
     @Override
     public void setOverallPrice(String price) {
         moneyAmountText.setText(price);
+    }
+
+    @Override
+    public int getCurrencyId() {
+        SharedPreferences sharedPref =getApplicationContext().getSharedPreferences("harkor.myCryptocurrency", Context.MODE_PRIVATE);
+        return sharedPref.getInt("currencyCode",1);
+
     }
 }
