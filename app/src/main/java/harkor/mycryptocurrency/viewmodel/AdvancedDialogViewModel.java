@@ -39,7 +39,6 @@ public class AdvancedDialogViewModel implements SingleResponseForAdvanced{
                 price=cryptocurrency.pricePln; break;
             case 4:
                 price=cryptocurrency.priceBtc; break;
-
         }
 
         return  price;

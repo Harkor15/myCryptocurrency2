@@ -54,12 +54,9 @@ Context context;
                         }
                         listRefresh.refresh();
                     }
-
                 }
             });
-
         return builder.create();
-
     }
 
     @Override
