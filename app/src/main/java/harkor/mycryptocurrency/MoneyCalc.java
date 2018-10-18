@@ -27,11 +27,16 @@ public class MoneyCalc implements MultiResponseForMoneyCalc {
         smallTable=db.smallTable();
         currencyTag=overallPrice.getCurrencyId();
         RetrofitInterface retrofitInterface=new RetrofitInterface();
-        String names="";
-        for(int i=0;i<smallTable.size();i++){
-            names+=smallTable.get(i).tag+",";
+        if(smallTable.size()!=0){
+            String names="";
+            for(int i=0;i<smallTable.size();i++){
+                names+=smallTable.get(i).tag+",";
+            }
+            retrofitInterface.multiCrypto(names,this);
+        }else{
+            overallPrice.setOverallPrice(addCurrencyTag("0git "));
         }
-        retrofitInterface.multiCrypto(names,this);
+
     }
 
     @Override
