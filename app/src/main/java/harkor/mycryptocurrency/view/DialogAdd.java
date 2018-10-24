@@ -7,13 +7,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
 import harkor.mycryptocurrency.CryptoAdd;
 import harkor.mycryptocurrency.R;
-import harkor.mycryptocurrency.model.ListRefresh;
 import harkor.mycryptocurrency.services.CryptoCheckAdd;
 import harkor.mycryptocurrency.services.DatabaseController;
 

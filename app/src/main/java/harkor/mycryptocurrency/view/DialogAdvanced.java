@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,7 +17,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import harkor.mycryptocurrency.R;
 import harkor.mycryptocurrency.model.Cryptocurrency;
-import harkor.mycryptocurrency.model.ListRefresh;
 import harkor.mycryptocurrency.services.DatabaseController;
 import harkor.mycryptocurrency.viewmodel.AdvancedDialogViewModel;
 

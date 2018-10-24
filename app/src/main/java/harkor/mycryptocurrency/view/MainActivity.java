@@ -1,14 +1,13 @@
 package harkor.mycryptocurrency.view;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,32 +15,29 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import harkor.mycryptocurrency.MoneyCalc;
-import harkor.mycryptocurrency.OverallPrice;
-import harkor.mycryptocurrency.model.ListRefresh;
 import harkor.mycryptocurrency.services.DatabaseController;
 import harkor.mycryptocurrency.ListViewAdapter;
 import harkor.mycryptocurrency.R;
-import harkor.mycryptocurrency.services.RetrofitInterface;
 import harkor.mycryptocurrency.viewmodel.ListDataEditor;
+import harkor.mycryptocurrency.viewmodel.MainViewModel;
 
-public class MainActivity extends AppCompatActivity implements ListRefresh,OverallPrice{
+public class MainActivity extends AppCompatActivity implements ListRefresh,OverallPrice,InterfaceOfMainActivity{
 
+    MainViewModel mainViewModel;
     @BindView(R.id.text_money_amount) TextView moneyAmountText;
     @BindView(R.id.list)ListView listView;
 
     @OnClick(R.id.image_add)
     public void onClickAdd(){
-        DialogAdd dialogAdd=new DialogAdd();
-        dialogAdd.show(getFragmentManager(), "missiles");
+        mainViewModel.addCrypto();
     }
     @OnClick(R.id.image_refresh)
     public void onClickRefresh(){
-        MoneyCalc moneyCalc=new MoneyCalc(new DatabaseController(getApplicationContext()),this);
-        moneyCalc.goGoGo();
+        mainViewModel.refresh(this);
     }
     @OnClick(R.id.image_settings)
     public void onClickSettings(){
-        new DialogSettings().show(getFragmentManager(),"settings");
+        mainViewModel.settings();
     }
 
     @Override
@@ -49,18 +45,18 @@ public class MainActivity extends AppCompatActivity implements ListRefresh,Overa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mainViewModel=new MainViewModel(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("MyCryptocurrency","loadListView");
         loadListView();
     }
 
     public void loadListView(){
         final ListDataEditor listDataEditor=new ListDataEditor(new DatabaseController(getApplicationContext()));
-        onClickRefresh();
+
         ListViewAdapter listViewAdapter=new ListViewAdapter(this,listDataEditor.getNames(),listDataEditor.getAmounts());
         listView.setAdapter(listViewAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -74,12 +70,12 @@ public class MainActivity extends AppCompatActivity implements ListRefresh,Overa
 
             }
         });
+        onClickRefresh();
     }
 
     @Override
     public void refresh() {
         loadListView();
-        Log.d("MyCryptocurrency","loadListView");
     }
 
     @Override
@@ -93,4 +89,15 @@ public class MainActivity extends AppCompatActivity implements ListRefresh,Overa
         return sharedPref.getInt("currencyCode",1);
 
     }
+
+    @Override
+    public FragmentManager fragmentMenagerGetter() {
+        return getFragmentManager();
+    }
+
+    @Override
+    public DatabaseController databaseGetter() {
+        return new DatabaseController(getApplicationContext());
+    }
+
 }

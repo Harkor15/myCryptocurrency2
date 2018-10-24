@@ -1,6 +1,5 @@
 package harkor.mycryptocurrency.services;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
@@ -8,7 +7,7 @@ import java.util.Date;
 
 import harkor.mycryptocurrency.CryptoAdd;
 import harkor.mycryptocurrency.model.CryptoPrices;
-import harkor.mycryptocurrency.model.ListRefresh;
+import harkor.mycryptocurrency.view.ListRefresh;
 
 public class CryptoCheckAdd {
     String name;

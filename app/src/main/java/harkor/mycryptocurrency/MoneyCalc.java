@@ -1,9 +1,5 @@
 package harkor.mycryptocurrency;
 
-import android.util.Log;
-
-import java.text.Format;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
 
@@ -11,6 +7,7 @@ import harkor.mycryptocurrency.model.CryptoPrices;
 import harkor.mycryptocurrency.model.Cryptocurrency;
 import harkor.mycryptocurrency.services.DatabaseController;
 import harkor.mycryptocurrency.services.RetrofitInterface;
+import harkor.mycryptocurrency.view.OverallPrice;
 
 public class MoneyCalc implements MultiResponseForMoneyCalc {
     DatabaseController db;
@@ -34,7 +31,7 @@ public class MoneyCalc implements MultiResponseForMoneyCalc {
             }
             retrofitInterface.multiCrypto(names,this);
         }else{
-            overallPrice.setOverallPrice(addCurrencyTag("0git "));
+            overallPrice.setOverallPrice(addCurrencyTag("0"));
         }
 
     }
