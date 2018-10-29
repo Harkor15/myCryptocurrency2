@@ -1,4 +1,4 @@
-package harkor.mycryptocurrency;
+package harkor.mycryptocurrency.services;
 
 import android.content.Context;
 import android.media.Image;
@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.LinkedList;
+
+import harkor.mycryptocurrency.R;
 
 public class ListViewAdapter extends BaseAdapter{
     Context context;
@@ -42,13 +44,10 @@ public class ListViewAdapter extends BaseAdapter{
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         view=inflater.inflate(R.layout.simple_list_item,null);
-
         TextView name=view.findViewById(R.id.text_name);
         TextView amount=view.findViewById(R.id.text_amount);
-
         name.setText(names.get(i));
         amount.setText(""+amounts.get(i));
-
         return view;
     }
 }

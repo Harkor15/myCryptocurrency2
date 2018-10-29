@@ -1,4 +1,4 @@
-package harkor.mycryptocurrency;
+package harkor.mycryptocurrency.Interfaces;
 
 import java.util.Map;
 import harkor.mycryptocurrency.model.CryptoPrices;

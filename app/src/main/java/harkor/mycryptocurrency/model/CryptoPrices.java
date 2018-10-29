@@ -35,19 +35,4 @@ public class CryptoPrices {
         return priceBTC;
     }
 
-    public void setPriceUSD(Double priceUSD) {
-        this.priceUSD = priceUSD;
-    }
-
-    public void setPriceEUR(Double priceEUR) {
-        this.priceEUR = priceEUR;
-    }
-
-    public void setPricePLN(Double pricePLN) {
-        this.pricePLN = pricePLN;
-    }
-
-    public void setPriceBTC(Double priceBTC) {
-        this.priceBTC = priceBTC;
-    }
 }

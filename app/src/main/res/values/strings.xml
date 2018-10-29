@@ -15,4 +15,6 @@
     <string name="delete">DELETE</string>
     <string name="tapMoreToDelete">Click one more time to delete</string>
     <string name="sureDelete">Delete this crypto?</string>
+    <string name="bad_name_amount">Incorrect name or amount</string>
+    <string name="connection_error">Connection error</string>
 </resources>

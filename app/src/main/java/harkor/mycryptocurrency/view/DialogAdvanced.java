@@ -15,12 +15,14 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import harkor.mycryptocurrency.Interfaces.AdvancedDialogInterface;
+import harkor.mycryptocurrency.Interfaces.ListRefresh;
 import harkor.mycryptocurrency.R;
 import harkor.mycryptocurrency.model.Cryptocurrency;
 import harkor.mycryptocurrency.services.DatabaseController;
-import harkor.mycryptocurrency.viewmodel.AdvancedDialogViewModel;
+import harkor.mycryptocurrency.viewmodel.AdvancedDialogViewmodel;
 
-public class DialogAdvanced extends DialogFragment implements AdvancedDialogInterface{
+public class DialogAdvanced extends DialogFragment implements AdvancedDialogInterface {
 
     @BindView(R.id.text_name) TextView nameText;
     @BindView(R.id.text_amount) TextView amountText;
@@ -37,7 +39,7 @@ public class DialogAdvanced extends DialogFragment implements AdvancedDialogInte
     private long mSecDelete=0;
     private ListRefresh listRefresh;
     int cryptoID;
-    int currencyTag;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         listRefresh=(ListRefresh)getActivity();
@@ -45,10 +47,8 @@ public class DialogAdvanced extends DialogFragment implements AdvancedDialogInte
         final View mView=getActivity().getLayoutInflater().inflate(R.layout.advanced_dialog,null);
         context=mView.getContext();
         ButterKnife.bind(this, mView);
-        SharedPreferences sharedPreferences=context.getSharedPreferences("harkor.myCryptocurrency",Context.MODE_PRIVATE);
-        currencyTag=sharedPreferences.getInt("currencyCode",1);
-        AdvancedDialogViewModel advancedDialogViewModel=new AdvancedDialogViewModel(this);
-        advancedDialogViewModel.startViewModel();
+        AdvancedDialogViewmodel advancedDialogViewmodel =new AdvancedDialogViewmodel(this);
+        advancedDialogViewmodel.startViewModel();
         final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         builder.setView(mView)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -120,7 +120,8 @@ public class DialogAdvanced extends DialogFragment implements AdvancedDialogInte
 
     @Override
     public int getCurrencyCode() {
-        return currencyTag;
+        SharedPreferences sharedPreferences=context.getSharedPreferences("harkor.myCryptocurrency",Context.MODE_PRIVATE);
+        return sharedPreferences.getInt("currencyCode",1);
     }
 
     @Override

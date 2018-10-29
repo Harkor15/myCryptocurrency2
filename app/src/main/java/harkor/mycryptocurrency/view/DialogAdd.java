@@ -9,28 +9,31 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import harkor.mycryptocurrency.CryptoAdd;
+import harkor.mycryptocurrency.Interfaces.AddDialogInterface;
+import harkor.mycryptocurrency.Interfaces.CryptoAdd;
+import harkor.mycryptocurrency.Interfaces.ListRefresh;
+import harkor.mycryptocurrency.Interfaces.ToastDisplay;
 import harkor.mycryptocurrency.R;
 import harkor.mycryptocurrency.services.CryptoCheckAdd;
 import harkor.mycryptocurrency.services.DatabaseController;
+import harkor.mycryptocurrency.viewmodel.AddDialogViewmodel;
 
-public class DialogAdd extends DialogFragment implements CryptoAdd{
+public class DialogAdd extends DialogFragment implements AddDialogInterface, ToastDisplay{
 
-ListRefresh listRefresh;
 Context context;
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        listRefresh=(ListRefresh) getActivity();
+        final AddDialogViewmodel addDialogViewmodel=new AddDialogViewmodel(this);
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
         final View mView=getActivity().getLayoutInflater().inflate(R.layout.add_dialog,null);
-        final CryptoAdd cryptoAdd=this;
         context=mView.getContext();
         builder.setView(mView)
             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    DialogAdd.this.getDialog().cancel();
                 }
             })
             .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -38,28 +41,37 @@ Context context;
                 public void onClick(DialogInterface dialogInterface, int i) {
                     EditText editName= mView.findViewById(R.id.edit_name);
                     EditText editAmount=mView.findViewById(R.id.edit_amount);
-                    String name=editName.getText()+"";
-                    name=name.toUpperCase();
-                    String amountS=editAmount.getText()+"";
-                    if (!amountS.equals("")) {
-                        double amount;
-                        try{
-                            amount= Double.parseDouble(amountS);
-                            CryptoCheckAdd cryptoCheckAdd=new CryptoCheckAdd(name,amount,cryptoAdd,(ListRefresh)getActivity());
-                            cryptoCheckAdd.check();
-                        }catch (Error e){
-                            Log.d("MyCrypto","name error");
-                        }
-                        listRefresh.refresh();
-                    }
+                    addDialogViewmodel.okClick(editName.getText()+"",editAmount.getText()+"");
                 }
             });
         return builder.create();
+
     }
 
     @Override
-    public void dbAddNewCrypto(String tag, double amount, String date, double priceUsd, double priceEur, double pricePln, double priceBtc) {
-        DatabaseController db=new DatabaseController(context);
-        db.addCrypto(tag,amount,date,priceUsd,priceEur,pricePln,priceBtc) ;
+    public ListRefresh getListRefresh() {
+        return (ListRefresh)getActivity();
+    }
+
+    @Override
+    public DatabaseController getDatabase() {
+        return new DatabaseController(context);
+    }
+
+    @Override
+    public ToastDisplay getToastDisplay() {
+        return this;
+    }
+
+    @Override
+    public void showToast(int toastId) {
+        switch (toastId){
+            case 1:
+                Toast.makeText(context,R.string.bad_name_amount,Toast.LENGTH_SHORT).show();
+                break;
+            case 2:
+                Toast.makeText(context,R.string.connection_error,Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 }

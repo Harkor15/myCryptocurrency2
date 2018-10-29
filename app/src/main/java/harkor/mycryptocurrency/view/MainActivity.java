@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,14 +13,16 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import harkor.mycryptocurrency.MoneyCalc;
+import harkor.mycryptocurrency.Interfaces.InterfaceOfMainActivity;
+import harkor.mycryptocurrency.Interfaces.ListRefresh;
+import harkor.mycryptocurrency.Interfaces.OverallPrice;
 import harkor.mycryptocurrency.services.DatabaseController;
-import harkor.mycryptocurrency.ListViewAdapter;
+import harkor.mycryptocurrency.services.ListViewAdapter;
 import harkor.mycryptocurrency.R;
-import harkor.mycryptocurrency.viewmodel.ListDataEditor;
+import harkor.mycryptocurrency.services.ListDataEditor;
 import harkor.mycryptocurrency.viewmodel.MainViewModel;
 
-public class MainActivity extends AppCompatActivity implements ListRefresh,OverallPrice,InterfaceOfMainActivity{
+public class MainActivity extends AppCompatActivity implements ListRefresh,OverallPrice,InterfaceOfMainActivity {
 
     MainViewModel mainViewModel;
     @BindView(R.id.text_money_amount) TextView moneyAmountText;
@@ -67,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements ListRefresh,Overa
                 DialogAdvanced dialogAdvanced=new DialogAdvanced();
                 dialogAdvanced.setArguments(bundle);
                 dialogAdvanced.show(getFragmentManager(), "advanced");
-
             }
         });
         onClickRefresh();

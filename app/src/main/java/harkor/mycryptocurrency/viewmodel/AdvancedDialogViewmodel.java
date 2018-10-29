@@ -2,18 +2,18 @@ package harkor.mycryptocurrency.viewmodel;
 
 import android.util.Log;
 
-import harkor.mycryptocurrency.SingleResponseForAdvanced;
+import harkor.mycryptocurrency.Interfaces.SingleResponseForAdvanced;
 import harkor.mycryptocurrency.model.Cryptocurrency;
 import harkor.mycryptocurrency.services.RetrofitInterface;
-import harkor.mycryptocurrency.view.AdvancedDialogInterface;
+import harkor.mycryptocurrency.Interfaces.AdvancedDialogInterface;
 
-public class AdvancedDialogViewModel implements SingleResponseForAdvanced{
+public class AdvancedDialogViewmodel implements SingleResponseForAdvanced{
     AdvancedDialogInterface adi;
     int cryptoCode;
     Cryptocurrency cryptocurrency;
     java.text.DecimalFormat doubleFormat=new java.text.DecimalFormat("0.00");
 
-    public AdvancedDialogViewModel(AdvancedDialogInterface adi){
+    public AdvancedDialogViewmodel(AdvancedDialogInterface adi){
         this.adi=adi;
         cryptoCode=adi.getCurrencyCode();
         cryptocurrency=adi.getCrypto();

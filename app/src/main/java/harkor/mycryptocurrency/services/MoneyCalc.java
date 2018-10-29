@@ -1,13 +1,14 @@
-package harkor.mycryptocurrency;
+package harkor.mycryptocurrency.services;
 
 import java.util.LinkedList;
 import java.util.Map;
 
+import harkor.mycryptocurrency.Interfaces.MultiResponseForMoneyCalc;
 import harkor.mycryptocurrency.model.CryptoPrices;
 import harkor.mycryptocurrency.model.Cryptocurrency;
 import harkor.mycryptocurrency.services.DatabaseController;
 import harkor.mycryptocurrency.services.RetrofitInterface;
-import harkor.mycryptocurrency.view.OverallPrice;
+import harkor.mycryptocurrency.Interfaces.OverallPrice;
 
 public class MoneyCalc implements MultiResponseForMoneyCalc {
     DatabaseController db;
@@ -31,14 +32,12 @@ public class MoneyCalc implements MultiResponseForMoneyCalc {
             }
             retrofitInterface.multiCrypto(names,this);
         }else{
-            overallPrice.setOverallPrice(addCurrencyTag("0"));
+            overallPrice.setOverallPrice(AddCurrencySign.addCurrencySign(currencyTag,"0"));
         }
-
     }
 
     @Override
     public void giveResponseToCalc( Map<String,CryptoPrices> pricesMap) {
-        //Log.d("MyCryptocurrency", pricesMap.get("LSK").getPricePLN().toString());
         double sum=0;
         for(int i=0;i<smallTable.size();i++){
             CryptoPrices cryptoPrices=pricesMap.get(smallTable.get(i).tag);
@@ -47,12 +46,10 @@ public class MoneyCalc implements MultiResponseForMoneyCalc {
                     sum+=cryptoPrices.getPriceUSD()*smallTable.get(i).amount;
                     break;
                 case 2:
-                    sum+=cryptoPrices.getPriceEUR() *smallTable.get(i).amount;
+                    sum+=cryptoPrices.getPriceEUR()*smallTable.get(i).amount;
                     break;
                 case 3:
-                    sum+=
-                            cryptoPrices.getPricePLN()
-                            *smallTable.get(i).amount;
+                    sum+=cryptoPrices.getPricePLN()*smallTable.get(i).amount;
                     break;
                 default:
                     sum+=cryptoPrices.getPriceBTC()*smallTable.get(i).amount;
@@ -60,17 +57,7 @@ public class MoneyCalc implements MultiResponseForMoneyCalc {
             }
         }
         String sumTxt=doubleFormat.format(sum);
-        sumTxt=addCurrencyTag(sumTxt);
-        overallPrice.setOverallPrice(sumTxt); //TODO: add currency tag!!!
-    }
-    private String addCurrencyTag(String amount){
-        String result="";
-        switch (currencyTag){
-            case 1: result="$"+amount;break;
-            case 2: result=amount+"€";break;
-            case 3: result=amount+"zł";break;
-            case 4: result=amount+" BTC";
-        }
-        return result;
+        sumTxt=AddCurrencySign.addCurrencySign(currencyTag,sumTxt);
+        overallPrice.setOverallPrice(sumTxt);
     }
 }

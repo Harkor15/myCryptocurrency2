@@ -1,4 +1,4 @@
-package harkor.mycryptocurrency.viewmodel;
+package harkor.mycryptocurrency.services;
 
 import java.util.LinkedList;
 
@@ -6,8 +6,6 @@ import harkor.mycryptocurrency.model.Cryptocurrency;
 import harkor.mycryptocurrency.services.DatabaseController;
 
 public class ListDataEditor {
-    //LinkedList<String> names;
-    //LinkedList<Double> amounts;
     LinkedList<Cryptocurrency> fullCrypto;
     DatabaseController db;
 

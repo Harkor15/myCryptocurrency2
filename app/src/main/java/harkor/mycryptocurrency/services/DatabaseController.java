@@ -58,19 +58,7 @@ public class DatabaseController extends SQLiteOpenHelper {
         db.delete(FeedDatabase.TABLE_NAME, selection, selectionArgs);
         db.close();
     }
-    public void edicCrypto(int id,double newAmount){
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(FeedDatabase.COLUMN_NAME_AMOUNT, newAmount);
-        String selection = FeedDatabase.COLUMN_NAME_ID + " LIKE ?";
-        String[] selectionArgs = { ""+id };
-        db.update(
-                FeedDatabase.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs);
-        db.close();
-    }
+
     public LinkedList<Cryptocurrency> fullTable(){
         SQLiteDatabase db = getReadableDatabase();
         String sortOrder= FeedDatabase.COLUMN_NAME_ID+" ASC";

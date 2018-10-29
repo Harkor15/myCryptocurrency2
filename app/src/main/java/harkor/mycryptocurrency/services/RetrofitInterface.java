@@ -2,12 +2,11 @@ package harkor.mycryptocurrency.services;
 
 import android.util.Log;
 
-import java.util.Collection;
 import java.util.Map;
 
-import harkor.mycryptocurrency.CryptoCompareClient;
-import harkor.mycryptocurrency.MultiResponseForMoneyCalc;
-import harkor.mycryptocurrency.SingleResponseForAdvanced;
+import harkor.mycryptocurrency.Interfaces.CryptoCompareClient;
+import harkor.mycryptocurrency.Interfaces.MultiResponseForMoneyCalc;
+import harkor.mycryptocurrency.Interfaces.SingleResponseForAdvanced;
 import harkor.mycryptocurrency.model.CryptoPrices;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,7 +34,6 @@ public class RetrofitInterface {
                 }
                 srfa.actualPrice(result);
             }
-
             @Override
             public void onFailure(Call<CryptoPrices> call, Throwable t) {
                 srfa.wentWrong();
@@ -66,9 +64,6 @@ public class RetrofitInterface {
             @Override
             public void onResponse(Call<Map<String,CryptoPrices>> call, Response<Map<String,CryptoPrices>> response) {
                 Map<String,CryptoPrices> map=response.body();
-                //Collection<CryptoPrices> col=map.values();
-                //CryptoPrices cP=map.get("BTC");
-                //Log.d("MyCrypto", "succes retrof "+cP.getPriceUSD()  );
                 mrfmc.giveResponseToCalc(map);
             }
 

@@ -1,4 +1,4 @@
-package harkor.mycryptocurrency.view;
+package harkor.mycryptocurrency.Interfaces;
 
 import android.app.FragmentManager;
 
