@@ -4,17 +4,18 @@
     <string name="amount">Amount</string>
     <string name="eg_name">e.g. BTC</string>
     <string name="eg_amount">e.g. 0.512</string>
-    <string name="ok">OK</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="cancel">Cancel</string>
     <string name="db_addes">Success!</string>
     <string name="default_currency" > Default currency</string>
-    <string name="btc">BTC</string>
-    <string name="usd">USD</string>
-    <string name="eur">EUR</string>
-    <string name="pln">PLN</string>
+    <string name="btc" translatable="false">BTC</string>
+    <string name="usd" translatable="false">USD</string>
+    <string name="eur" translatable="false">EUR</string>
+    <string name="pln" translatable="false">PLN</string>
     <string name="delete">DELETE</string>
     <string name="tapMoreToDelete">Click one more time to delete</string>
     <string name="sureDelete">Delete this crypto?</string>
     <string name="bad_name_amount">Incorrect name or amount</string>
     <string name="connection_error">Connection error</string>
+    <string name="add_new_crypto">Add new cryptocurrency</string>
 </resources>

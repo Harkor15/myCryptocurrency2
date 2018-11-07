@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">My cryptocurrency</string>
+    <string name="shart_name">Krótka nazwa</string>
+    <string name="amount">Ilość</string>
+    <string name="eg_name">n.p. BTC</string>
+    <string name="eg_amount">n.p. 0.512</string>
+    <string name="cancel">Anuluj</string>
+    <string name="db_addes">Sukces!</string>
+    <string name="default_currency">Domyślna waluta</string>
+    <string name="delete">USUŃ</string>
+    <string name="tapMoreToDelete">Kliknij raz jeszcze aby usunąć</string>
+    <string name="bad_name_amount">Niepoprawna nazwa lub ilość</string>
+    <string name="connection_error">Błąd połączenia</string>
+    <string name="sureDelete">Usunąć?</string>
+    <string name="add_new_crypto">Dodaj nową kryptowalutę</string>
+</resources>
