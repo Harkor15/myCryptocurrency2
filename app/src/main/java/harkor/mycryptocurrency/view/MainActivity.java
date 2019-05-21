@@ -10,6 +10,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,7 +27,7 @@ import harkor.mycryptocurrency.services.ListDataEditor;
 import harkor.mycryptocurrency.viewmodel.MainViewModel;
 
 public class MainActivity extends AppCompatActivity implements ListRefresh,OverallPrice,InterfaceOfMainActivity {
-
+    private AdView mAdView;
     MainViewModel mainViewModel;
     @BindView(R.id.text_money_amount) TextView moneyAmountText;
     @BindView(R.id.list)ListView listView;
@@ -46,6 +50,13 @@ public class MainActivity extends AppCompatActivity implements ListRefresh,Overa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        MobileAds.initialize(this, String.valueOf(R.string.banner_ad_unit_id));
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+
+
         mainViewModel=new MainViewModel(this);
     }
 
