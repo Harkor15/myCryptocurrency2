@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.MainActivity">
+    tools:context=".view.MainActivity"
+    android:background="@drawable/btc_background">
 
 
     <TextView
@@ -36,7 +37,7 @@
         app:layout_constraintEnd_toStartOf="@+id/image_add"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/icons_settings" />
+        android:src="@drawable/ic_settings_black_48dp" />
 
     <ImageView
         android:id="@+id/image_add"
@@ -46,7 +47,7 @@
         app:layout_constraintEnd_toStartOf="@+id/image_refresh"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/image_settings"
-        app:srcCompat="@drawable/icons_add" />
+        android:src="@drawable/ic_add_black_48dp" />
 
     <ImageView
         android:id="@+id/image_refresh"
@@ -57,7 +58,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/image_add"
-        app:srcCompat="@drawable/icons_refresh" />
+        android:src="@drawable/ic_refresh_black_48dp" />
 
     <ListView
         android:id="@+id/list"

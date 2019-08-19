@@ -26,12 +26,12 @@
         android:id="@+id/image_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icons_info" />
+        app:srcCompat="@drawable/ic_info_outline_black_48dp" />
 
     <TextView
         android:id="@+id/text_amount"
