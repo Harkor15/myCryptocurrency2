@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".view.MainActivity"
-    android:background="@drawable/btc_background">
+    android:background="@drawable/background">
 
 
     <TextView
         android:id="@+id/text_money_amount"
+        style="@style/TextColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="$100.00"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="54sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +62,7 @@
         app:layout_constraintStart_toEndOf="@+id/image_add"
         android:src="@drawable/ic_refresh_black_48dp" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="0dp"
         android:layout_height="0dp"

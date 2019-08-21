@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -14,9 +16,14 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import harkor.mycryptocurrency.Cryptocurrency;
+import harkor.mycryptocurrency.Details;
+import harkor.mycryptocurrency.DetailsAdapter;
 import harkor.mycryptocurrency.Interfaces.InterfaceOfMainActivity;
 import harkor.mycryptocurrency.Interfaces.ListRefresh;
 import harkor.mycryptocurrency.Interfaces.OverallPrice;
@@ -26,8 +33,9 @@ import harkor.mycryptocurrency.R;
 import harkor.mycryptocurrency.services.ListDataEditor;
 import harkor.mycryptocurrency.viewmodel.MainViewModel;
 
-public class MainActivity extends AppCompatActivity implements ListRefresh,OverallPrice,InterfaceOfMainActivity {
+public class MainActivity extends AppCompatActivity /*implements ListRefresh,OverallPrice,InterfaceOfMainActivity*/ {
     private AdView mAdView;
+    /*
     MainViewModel mainViewModel;
     @BindView(R.id.text_money_amount) TextView moneyAmountText;
     @BindView(R.id.list)ListView listView;
@@ -43,20 +51,36 @@ public class MainActivity extends AppCompatActivity implements ListRefresh,Overa
     @OnClick(R.id.image_settings)
     public void onClickSettings(){
         mainViewModel.settings();
-    }
 
+    }
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*
         ButterKnife.bind(this);
         MobileAds.initialize(this, String.valueOf(R.string.banner_ad_unit_id));
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         mainViewModel=new MainViewModel(this);
-    }
+        */
+        RecyclerView recyclerView=findViewById(R.id.list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<Cryptocurrency> cryptocurrencys=new ArrayList<>();
+        ArrayList<Details> details=new ArrayList<>();
+        details.add(new Details("Bitcoin","22-22-2222"));
+        cryptocurrencys.add(new Cryptocurrency("BTC",0.00000001,details));
+        cryptocurrencys.add(new Cryptocurrency("BTC",0.00000001,details));
+        cryptocurrencys.add(new Cryptocurrency("BTC",0.00000001,details));
 
+        DetailsAdapter adapter=new DetailsAdapter(cryptocurrencys);
+        recyclerView.setAdapter(adapter);
+
+
+    }
+/*
     @Override
     protected void onResume() {
         super.onResume();
@@ -107,5 +131,5 @@ public class MainActivity extends AppCompatActivity implements ListRefresh,Overa
     public DatabaseController databaseGetter() {
         return new DatabaseController(getApplicationContext());
     }
-
+*/
 }
