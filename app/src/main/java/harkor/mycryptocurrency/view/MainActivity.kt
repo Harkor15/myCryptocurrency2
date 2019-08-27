@@ -1,44 +1,25 @@
 package harkor.mycryptocurrency.view
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.TextView
-
-import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.MobileAds
-
-import java.util.ArrayList
-
-
 import harkor.mycryptocurrency.Cryptocurrency
 import harkor.mycryptocurrency.Details
 import harkor.mycryptocurrency.DetailsAdapter
-import harkor.mycryptocurrency.Interfaces.InterfaceOfMainActivity
-import harkor.mycryptocurrency.Interfaces.ListRefresh
-import harkor.mycryptocurrency.Interfaces.OverallPrice
-import harkor.mycryptocurrency.services.DatabaseController
-import harkor.mycryptocurrency.services.ListViewAdapter
 import harkor.mycryptocurrency.R
-import harkor.mycryptocurrency.services.ListDataEditor
-import harkor.mycryptocurrency.viewmodel.MainViewModel
 import harkor.mycryptocurrency.viewmodels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,InterfaceOfMainActivity*/() {
     private val mAdView: AdView? = null
     private var mainActivityViewModel: MainActivityViewModel? = null
-    //@BindView(R.id.text_money_amount)
+
     //internal var moneyAmountText: TextView? = null
 
 
@@ -66,7 +47,7 @@ class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,Int
         setContentView(R.layout.activity_main)
         //ButterKnife.bind(this)
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        mainActivityViewModel!!.amount
+        mainActivityViewModel!!.getAmount()
                 .observe(this, Observer { s -> text_money_amount!!.text = s })
         /*
 
