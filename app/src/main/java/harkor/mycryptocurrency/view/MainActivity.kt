@@ -1,6 +1,5 @@
 package harkor.mycryptocurrency.view
 
-import android.app.FragmentManager
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
