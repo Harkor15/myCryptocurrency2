@@ -12,8 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import harkor.mycryptocurrency.Interfaces.SettingsDialogInterface;
 import harkor.mycryptocurrency.R;
 import harkor.mycryptocurrency.viewmodel.SettingsDialogViewmodel;

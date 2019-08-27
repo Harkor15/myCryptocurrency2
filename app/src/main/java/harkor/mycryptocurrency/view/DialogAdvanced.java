@@ -13,8 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import harkor.mycryptocurrency.Interfaces.AdvancedDialogInterface;
 import harkor.mycryptocurrency.Interfaces.ListRefresh;
 import harkor.mycryptocurrency.R;
@@ -24,16 +23,16 @@ import harkor.mycryptocurrency.viewmodel.AdvancedDialogViewmodel;
 
 public class DialogAdvanced extends DialogFragment implements AdvancedDialogInterface {
 
-    @BindView(R.id.text_name) TextView nameText;
-    @BindView(R.id.text_amount) TextView amountText;
-    @BindView(R.id.text_time) TextView timeText;
-    @BindView(R.id.text_add_price) TextView addPriceText;
-    @BindView(R.id.text_add_value) TextView addValueText;
-    @BindView(R.id.text_balance) TextView balanceText;
-    @BindView(R.id.text_balance_percent) TextView balancePercentText;
-    @BindView(R.id.text_actual_price) TextView actualPriceText;
-    @BindView(R.id.text_actual_value) TextView actualValueText;
-    @BindView(R.id.button_delete) Button deleteButton;
+    /*@BindView(R.id.text_name)*/ TextView nameText;
+    /*@BindView(R.id.text_amount)*/ TextView amountText;
+    /*@BindView(R.id.text_time) */TextView timeText;
+    /*@BindView(R.id.text_add_price)*/ TextView addPriceText;
+    /*@BindView(R.id.text_add_value)*/ TextView addValueText;
+    /*@BindView(R.id.text_balance)*/ TextView balanceText;
+    /*@BindView(R.id.text_balance_percent)*/ TextView balancePercentText;
+    /*@BindView(R.id.text_actual_price)*/ TextView actualPriceText;
+    /*@BindView(R.id.text_actual_value)*/ TextView actualValueText;
+    /*@BindView(R.id.button_delete)*/ Button deleteButton;
 
     Context context;
     private long mSecDelete=0;
@@ -46,7 +45,7 @@ public class DialogAdvanced extends DialogFragment implements AdvancedDialogInte
         cryptoID=getArguments().getInt("idCrypto");
         final View mView=getActivity().getLayoutInflater().inflate(R.layout.advanced_dialog,null);
         context=mView.getContext();
-        ButterKnife.bind(this, mView);
+        //ButterKnife.bind(this, mView);
         AdvancedDialogViewmodel advancedDialogViewmodel =new AdvancedDialogViewmodel(this);
         advancedDialogViewmodel.startViewModel();
         final AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
