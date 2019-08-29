@@ -1,7 +1,5 @@
 package harkor.mycryptocurrency.model;
 
-import java.util.LinkedList;
-
 public class Cryptocurrency {
     public int id;
     public String tag;

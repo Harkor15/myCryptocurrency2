@@ -1,20 +1,27 @@
 package harkor.mycryptocurrency.view
 
 
+import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.google.android.gms.ads.AdView
 import harkor.mycryptocurrency.Cryptocurrency
 import harkor.mycryptocurrency.Details
 import harkor.mycryptocurrency.DetailsAdapter
 import harkor.mycryptocurrency.R
+import harkor.mycryptocurrency.room.AppDatabase
 import harkor.mycryptocurrency.viewmodels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,InterfaceOfMainActivity*/() {
     private val mAdView: AdView? = null
@@ -68,6 +75,16 @@ class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,Int
 
         val adapter = DetailsAdapter(cryptocurrencys)
         recyclerView.adapter = adapter
+
+        val db= Room.databaseBuilder(
+                applicationContext, AppDatabase::class.java,"database-name"
+        ).build()
+
+        val myExecutor = Executors.newSingleThreadExecutor()
+        myExecutor.execute {
+            db.cryptocurrencyDao().getAll().observe()
+        }
+
 
 
     }
@@ -124,3 +141,16 @@ class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,Int
     }
 */
 }
+
+private fun <T> LiveData<T>.observe() {
+    Log.d("MyCrypto", value.toString())
+}
+
+
+/*
+private class ExperimentalAsyncTask : AsyncTask<AppDatabase, Void, String>() {
+    override fun doInBackground(vararg db: AppDatabase?): String {
+        db.
+    }
+
+}*/
