@@ -1,18 +1,15 @@
 package harkor.mycryptocurrency.viewmodels
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import harkor.mycryptocurrency.CoinpaprikaApi
 
-import harkor.mycryptocurrency.DataRepository
-import harkor.mycryptocurrency.ListDataRepository
-import harkor.mycryptocurrency.RetrofitClientInstance
+import harkor.mycryptocurrency.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -43,11 +40,27 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         return dataFlag
     }
     fun getDataListFromApi(){
-        val retrofit = RetrofitClientInstance.instance.create(CoinpaprikaApi::class.java)
+       RetrofitInstance.requestInterface.getListData().observeOn(AndroidSchedulers.mainThread())
+               .subscribeOn(Schedulers.io())
+               .subscribe(this::handleResponse,this::handleError)
 
-        retrofit.getCoinsDataList().observeForever { dataList ->
-            Log.d("MyCrypto", dataList.toString())
-        }
+        //retrofit.getCoinsDataList().observeForever { dataList ->
+        //   Log.d("MyCrypto", dataList.toString())
+        //}
     }
-    //val dataListObserver
+
+    private fun handleResponse(dataList: List<CryptoListData>){
+        Log.d("MyCrypto",dataList.toString())
+    }
+    private fun handleError(error: Throwable){
+        Log.d("MyCrypto", "Error: ${error.message} , ${error.cause}")
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        //TODO: Clear disposable
+    }
+
+
+//val dataListObserver
 }
