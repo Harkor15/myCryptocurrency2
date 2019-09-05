@@ -2,6 +2,7 @@ package harkor.mycryptocurrency
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 
 class DataRepository {
 
@@ -11,6 +12,7 @@ class DataRepository {
             amount.value = "$1000000"
             return amount
         }
+    val retrofit =RetrofitClientInstance.instance.create(CoinpaprikaApi::class.java)
 
     companion object {
         private var instance: DataRepository? = null
@@ -21,6 +23,9 @@ class DataRepository {
             }
             return instance as DataRepository
         }
+    }
+    fun deachData(){
+        //retrofit.getCoinsDataList().observe(, Observer {  })
     }
 
 

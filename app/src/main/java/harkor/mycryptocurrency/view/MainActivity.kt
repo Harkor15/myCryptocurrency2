@@ -1,17 +1,18 @@
 package harkor.mycryptocurrency.view
 
 
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import harkor.mycryptocurrency.Cryptocurrency
 import harkor.mycryptocurrency.Details
 import harkor.mycryptocurrency.DetailsAdapter
@@ -20,51 +21,37 @@ import harkor.mycryptocurrency.room.AppDatabase
 import harkor.mycryptocurrency.viewmodels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
 
 class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,InterfaceOfMainActivity*/() {
     private val mAdView: AdView? = null
     private var mainActivityViewModel: MainActivityViewModel? = null
 
-    //internal var moneyAmountText: TextView? = null
-
-
-    /*
-    MainViewModel mainViewModel;
-
-    @BindView(R.id.list)ListView listView;
-
-    @OnClick(R.id.image_add)
-    public void onClickAdd(){
-        mainViewModel.addCrypto();
-    }
-    @OnClick(R.id.image_refresh)
-    public void onClickRefresh(){
-        mainViewModel.refresh(this);
-    }
-    @OnClick(R.id.image_settings)
-    public void onClickSettings(){
-        mainViewModel.settings();
-
-    }
-*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //ButterKnife.bind(this)
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel!!.getAmount()
                 .observe(this, Observer { s -> text_money_amount!!.text = s })
-        /*
 
-        MobileAds.initialize(this, String.valueOf(R.string.banner_ad_unit_id));
-        mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
-        mainViewModel=new MainViewModel(this);
-        */
-        val recyclerView = findViewById<RecyclerView>(R.id.list)
+
+        MobileAds.initialize(this, resources.getString( R.string.banner_ad_unit_id))
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
+
+        mainActivityViewModel!!.isDataDownloaded().observe(this,Observer{ dataFlag->
+            if(!dataFlag){
+                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                progress_bar.visibility= View.VISIBLE
+            }else{
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                progress_bar.visibility=View.INVISIBLE
+            }
+        })
+
+
+        /////////////////////////////////////////////////////////////////////////////
+        val recyclerView = list
         recyclerView.layoutManager = LinearLayoutManager(this)
         val cryptocurrencys = ArrayList<Cryptocurrency>()
         val details = ArrayList<Details>()
@@ -72,18 +59,20 @@ class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,Int
         cryptocurrencys.add(Cryptocurrency("BTC", 0.00000001, details))
         cryptocurrencys.add(Cryptocurrency("BTC", 0.00000001, details))
         cryptocurrencys.add(Cryptocurrency("BTC", 0.00000001, details))
-
         val adapter = DetailsAdapter(cryptocurrencys)
         recyclerView.adapter = adapter
+        /////////////////////////////////////////////////////////////////////////////
 
         val db= Room.databaseBuilder(
                 applicationContext, AppDatabase::class.java,"database-name"
         ).build()
+        /////////////////////////////////////////////////////////////////////////////
 
-        val myExecutor = Executors.newSingleThreadExecutor()
-        myExecutor.execute {
-            db.cryptocurrencyDao().getAll().observe()
-        }
+
+
+
+        //val dbFile=applicationContext.getDatabasePath("Cryptocurrency.db")
+
 
 
 
@@ -142,9 +131,7 @@ class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,Int
 */
 }
 
-private fun <T> LiveData<T>.observe() {
-    Log.d("MyCrypto", value.toString())
-}
+
 
 
 /*

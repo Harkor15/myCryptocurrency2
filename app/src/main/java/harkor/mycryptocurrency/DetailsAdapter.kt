@@ -28,4 +28,8 @@ class DetailsAdapter(groups: List<ExpandableGroup<*>>) : ExpandableRecyclerViewA
         val cryptocurrency = group as Cryptocurrency
         holder.bind(cryptocurrency)
     }
+
+    public fun setCryptocurrencys(){
+
+    }
 }
