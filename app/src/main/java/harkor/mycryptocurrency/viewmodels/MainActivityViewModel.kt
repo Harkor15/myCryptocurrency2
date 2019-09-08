@@ -50,7 +50,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun handleResponse(dataList: List<CryptoListData>){
-        Log.d("MyCrypto",dataList.toString())
+        Log.d("MyCrypto",dataList.size.toString())
     }
     private fun handleError(error: Throwable){
         Log.d("MyCrypto", "Error: ${error.message} , ${error.cause}")
