@@ -8,22 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import harkor.mycryptocurrency.Cryptocurrency
 import harkor.mycryptocurrency.Details
 import harkor.mycryptocurrency.DetailsAdapter
 import harkor.mycryptocurrency.R
-import harkor.mycryptocurrency.room.AppDatabase
 import harkor.mycryptocurrency.viewmodels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,InterfaceOfMainActivity*/() {
-    private val mAdView: AdView? = null
+    //private val mAdView: AdView? = null
     private var mainActivityViewModel: MainActivityViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,12 +57,12 @@ class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,Int
         cryptocurrencys.add(Cryptocurrency("BTC", 0.00000001, details))
         val adapter = DetailsAdapter(cryptocurrencys)
         recyclerView.adapter = adapter
-        /////////////////////////////////////////////////////////////////////////////
+        /*////////////////////////////////////////////////////////////////////////////
 
         val db= Room.databaseBuilder(
                 applicationContext, AppDatabase::class.java,"database-name"
         ).build()
-        /////////////////////////////////////////////////////////////////////////////
+        */////////////////////////////////////////////////////////////////////////////
 
 
 

@@ -1,27 +1,31 @@
 package harkor.mycryptocurrency.viewmodels
 
 import android.app.Application
+import android.os.Handler
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-
-import harkor.mycryptocurrency.*
+import androidx.room.Room
+import harkor.mycryptocurrency.AppDataListDatabase
+import harkor.mycryptocurrency.CryptoDataClassEntity
+import harkor.mycryptocurrency.RetrofitInstance
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
-
     private var amount: MutableLiveData<String>? = null
-    private var dataRepository: DataRepository? = null
     var dataFlag= MutableLiveData<Boolean>()
+    private var compositeDisposable: CompositeDisposable?=null
 
-    fun queryRepo() {
-        dataRepository = DataRepository.getInstance()
-        amount = dataRepository!!.amount
-
-    }
+    private val TAG= "MyCrypto"
 
     fun getAmount(): LiveData<String> {
         amount = MutableLiveData()
@@ -30,37 +34,42 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     fun isDataDownloaded(): MutableLiveData<Boolean> {
-        val dbFile=getApplication<Application>().getDatabasePath("Cryptocurrency.db")
+        val dbFile=getApplication<Application>().getDatabasePath("CryptoDataClassEntity.db")
         dataFlag.value=dbFile.exists()
         if(dataFlag.value==false){
-            //ListDataRepository
-          //  getDataListFromApi()
+            getDataListFromApi()
         }
-        getDataListFromApi()//TODO: DELETE!
         return dataFlag
     }
+
     fun getDataListFromApi(){
-       RetrofitInstance.requestInterface.getListData().observeOn(AndroidSchedulers.mainThread())
-               .subscribeOn(Schedulers.io())
-               .subscribe(this::handleResponse,this::handleError)
-
-        //retrofit.getCoinsDataList().observeForever { dataList ->
-        //   Log.d("MyCrypto", dataList.toString())
-        //}
+        Log.d(TAG, "add observer")
+        compositeDisposable= CompositeDisposable()
+        compositeDisposable?.add(RetrofitInstance.requestInterface.getListData()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::handleResponse,this::handleError)
+        )
     }
 
-    private fun handleResponse(dataList: List<CryptoListData>){
-        Log.d("MyCrypto",dataList.size.toString())
+    private fun handleResponse(dataList: List<CryptoDataClassEntity>){
+        Log.d("MyCrypto",dataList.size.toString()) //TODO: Delete!
+        val db=Room.databaseBuilder(
+                getApplication<Application>().applicationContext,
+                AppDataListDatabase::class.java,"CryptoDataClassEntity.db"
+        ).build()
+        GlobalScope.launch {
+            db.cryptoDataListDao().insertDataList(dataList)
+            withContext(Dispatchers.Main){dataFlag.value=true}
+        }
     }
+
     private fun handleError(error: Throwable){
         Log.d("MyCrypto", "Error: ${error.message} , ${error.cause}")
+        Toast.makeText(getApplication<Application>().applicationContext,"Check your internet connection", Toast.LENGTH_SHORT).show() //TODO: Make string resource
+        Handler().postDelayed({
+            Log.d(TAG, "Try again!")
+            getDataListFromApi()
+        }, 5000)
     }
-
-    override fun onCleared() {
-        super.onCleared()
-        //TODO: Clear disposable
-    }
-
-
-//val dataListObserver
 }

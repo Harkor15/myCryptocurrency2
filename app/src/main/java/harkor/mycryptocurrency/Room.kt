@@ -2,8 +2,6 @@ package harkor.mycryptocurrency
 
 import androidx.room.*
 
-//class CryptoDataListItem(val id:String,val name:String,val symbol: String)
-
 @Entity
 data class CryptoDataClassEntity(
         @PrimaryKey var id:String,
@@ -17,7 +15,7 @@ interface CryptoDataListDao{
     fun getCryptoFromSymbol(symbol:String):CryptoDataClassEntity
 
     @Insert
-    fun insertDataListItem(vararg cryptoData:CryptoDataClassEntity)
+    fun insertDataList(cryptoData:List<CryptoDataClassEntity>)
 
     //@Query("DROP TABLE cryptodataclassentity")
     //fun deleteAll()

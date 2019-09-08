@@ -11,7 +11,7 @@ data class CryptoListData (val id: String, val name: String , val symbol: String
 
 interface RequestInterface{
     @GET("v1/coins")
-    fun getListData(): Observable<List<CryptoListData>>
+    fun getListData(): Observable<List<CryptoDataClassEntity>>
 }
 
 class RetrofitInstance{
