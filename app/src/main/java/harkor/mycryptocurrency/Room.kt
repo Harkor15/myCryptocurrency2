@@ -25,3 +25,33 @@ interface CryptoDataListDao{
 abstract class AppDataListDatabase: RoomDatabase(){
     abstract fun cryptoDataListDao():CryptoDataListDao
 }
+
+///////////////////////////////////////////////////////////////////////// OWNED CRYPTO LIST
+
+@Entity
+data class CryptocurrencyOwnedEntity(
+        @PrimaryKey(autoGenerate = true) val id:String,
+        val tag:String,
+        val name:String,
+        val symbol:String,
+        val amount: Double,
+        val date: String,
+        val priceusd:Double,
+        val priceeur:Double,
+        val pricepln:Double,
+        val pricebtc:Double
+)
+
+@Dao
+interface CryptocurrencyOwnedDao{
+    @Query("SELECT * FROM cryptocurrencyownedentity")
+    fun getOwnedCryptocurrencys():List<CryptocurrencyOwnedEntity>
+
+    @Insert
+    fun insertNewOwnedCryptocurrency(newCrypto:CryptocurrencyOwnedEntity)
+}
+
+@Database (entities = [CryptocurrencyOwnedEntity::class], version = 1)
+abstract class OwnedCryptocurrencyDatabase: RoomDatabase(){
+    abstract fun cryptocurrencyOwnedDao(): CryptocurrencyOwnedDao
+}

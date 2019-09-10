@@ -2,6 +2,7 @@ package harkor.mycryptocurrency.view
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -45,7 +46,6 @@ class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,Int
             }
         })
 
-
         /////////////////////////////////////////////////////////////////////////////
         val recyclerView = list
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -58,18 +58,16 @@ class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,Int
         val adapter = DetailsAdapter(cryptocurrencys)
         recyclerView.adapter = adapter
         /*////////////////////////////////////////////////////////////////////////////
-
         val db= Room.databaseBuilder(
                 applicationContext, AppDatabase::class.java,"database-name"
         ).build()
         */////////////////////////////////////////////////////////////////////////////
-
-
-
-
         //val dbFile=applicationContext.getDatabasePath("Cryptocurrency.db")
 
-
+        for(i in 1..2){
+            Log.d("My crypto", i.toString())
+            mainActivityViewModel!!.getAllPrice()
+        }
 
 
     }

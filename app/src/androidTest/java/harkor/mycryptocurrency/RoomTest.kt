@@ -39,8 +39,8 @@ class EnityReadWriteTest{
     @Throws(Exception::class)
     fun writeAndReadInList(){
         val cryptoItemFromList=CryptoDataClassEntity("btc-bitcoin","Bitcoin","BTC")
-        //var list:List<CryptoDataClassEntity> =listOf(cryptoItemFromList)
-        cryptoDataListDao.insertDataListItem(cryptoItemFromList)
+        var list:List<CryptoDataClassEntity> =listOf(cryptoItemFromList)
+        cryptoDataListDao.insertDataList(list)
         val cryptoItem=cryptoDataListDao.getCryptoFromSymbol(cryptoItemFromList.symbol)
         assertEquals(cryptoItemFromList,cryptoItem)
         assert(true)

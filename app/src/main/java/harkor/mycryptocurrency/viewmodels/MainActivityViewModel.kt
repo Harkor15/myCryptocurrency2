@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import harkor.mycryptocurrency.AppDataListDatabase
 import harkor.mycryptocurrency.CryptoDataClassEntity
+import harkor.mycryptocurrency.CryptocurrencyInfo
 import harkor.mycryptocurrency.RetrofitInstance
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -72,4 +73,23 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             getDataListFromApi()
         }, 5000)
     }
+
+    fun getAllPrice(){
+        RetrofitInstance.requestInterface.getAllCryptoPrices()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(this::allPricecsHandleSucces,this::allPricesHandleError)
+
+
+    }
+    private fun allPricecsHandleSucces(priceData:CryptocurrencyInfo){
+        //Log.d(TAG,"Succes response amount: ${priceData.size}")
+        Log.d(TAG,"First record: ${priceData}")
+
+    }
+    private fun allPricesHandleError(error: Throwable){
+        Log.d(TAG,"ERROR Retrofit: $error")
+    }
+
+
 }
