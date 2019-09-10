@@ -12,6 +12,7 @@ import harkor.mycryptocurrency.model.FeedDatabase
 import java.util.*
 
 class DatabaseController(internal var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+
     fun addCrypto(tag: String, amount: Double, date: String, priceUsd: Double, priceEur: Double, pricePln: Double, priceBtc: Double) {
         val db = writableDatabase
         val values = ContentValues()
@@ -107,7 +108,11 @@ class DatabaseController(internal var context: Context) : SQLiteOpenHelper(conte
         Log.d("MyCrypto", "Database created!")
     }
 
-    override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, i: Int, i1: Int) {
+    override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        Log.d(Companion.TAG,"Migration from $oldVersion to $newVersion")
+        if(oldVersion==1){
+
+        }
 
     }
 
@@ -122,7 +127,8 @@ class DatabaseController(internal var context: Context) : SQLiteOpenHelper(conte
                 FeedDatabase.COLUMN_NAME_PRICE_PLN + " DOUBLE, " +
                 FeedDatabase.COLUMN_NAME_PRICE_BTC + " DOUBLE)"
         private val SQL_DELETE = "DROP TABLE IF EXISTS " + FeedDatabase.TABLE_NAME
-        val DATABASE_VERSION = 1
+        val DATABASE_VERSION = 2
         val DATABASE_NAME = "Cryptocurrency.db"
+        private const val TAG="MyCrypto"
     }
 }

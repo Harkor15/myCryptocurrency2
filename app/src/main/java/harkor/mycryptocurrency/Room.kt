@@ -21,16 +21,17 @@ interface CryptoDataListDao{
     //fun deleteAll()
 }
 
-@Database( entities= [CryptoDataClassEntity::class],version=1)
+@Database( entities= [CryptoDataClassEntity::class,CryptocurrencyOwnedEntity::class],version=1)
 abstract class AppDataListDatabase: RoomDatabase(){
     abstract fun cryptoDataListDao():CryptoDataListDao
+    abstract fun cryptocurrencyOwnedDao():CryptocurrencyOwnedDao
 }
 
 ///////////////////////////////////////////////////////////////////////// OWNED CRYPTO LIST
 
 @Entity
 data class CryptocurrencyOwnedEntity(
-        @PrimaryKey(autoGenerate = true) val id:String,
+        @PrimaryKey(autoGenerate = true) val id:Int,
         val tag:String,
         val name:String,
         val symbol:String,
@@ -50,8 +51,9 @@ interface CryptocurrencyOwnedDao{
     @Insert
     fun insertNewOwnedCryptocurrency(newCrypto:CryptocurrencyOwnedEntity)
 }
-
+/*
 @Database (entities = [CryptocurrencyOwnedEntity::class], version = 1)
 abstract class OwnedCryptocurrencyDatabase: RoomDatabase(){
     abstract fun cryptocurrencyOwnedDao(): CryptocurrencyOwnedDao
 }
+*/

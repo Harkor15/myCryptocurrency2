@@ -20,6 +20,7 @@ import java.lang.Exception
 @RunWith(AndroidJUnit4::class)
 class EnityReadWriteTest{
     private lateinit var cryptoDataListDao: CryptoDataListDao
+    private lateinit var cryptocurrencyOwnedDao: CryptocurrencyOwnedDao
     private  lateinit var db: AppDataListDatabase
 
     @Before
@@ -28,6 +29,7 @@ class EnityReadWriteTest{
         db= Room.inMemoryDatabaseBuilder(
                 context, AppDataListDatabase::class.java).build()
         cryptoDataListDao=db.cryptoDataListDao()
+        cryptocurrencyOwnedDao=db.cryptocurrencyOwnedDao()
     }
     @After
     @Throws(IOException::class)
@@ -37,13 +39,23 @@ class EnityReadWriteTest{
 
     @Test
     @Throws(Exception::class)
-    fun writeAndReadInList(){
+    fun writeAndReadInDataList(){
         val cryptoItemFromList=CryptoDataClassEntity("btc-bitcoin","Bitcoin","BTC")
-        var list:List<CryptoDataClassEntity> =listOf(cryptoItemFromList)
+        val list:List<CryptoDataClassEntity> =listOf(cryptoItemFromList)
         cryptoDataListDao.insertDataList(list)
         val cryptoItem=cryptoDataListDao.getCryptoFromSymbol(cryptoItemFromList.symbol)
         assertEquals(cryptoItemFromList,cryptoItem)
-        assert(true)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun writeAndReadInCryptocurrencyOwned(){
+        val newOwnedEntity=CryptocurrencyOwnedEntity(1,"BTC","Bitcoin",
+                "btc-bitcoin",1.3,"10.09.2019",
+                10000.0, 9000.0, 40000.0,1.0)
+        cryptocurrencyOwnedDao.insertNewOwnedCryptocurrency(newOwnedEntity)
+        val newCryptoFromDatabase=cryptocurrencyOwnedDao.getOwnedCryptocurrencys()
+        assertEquals(newOwnedEntity,newCryptoFromDatabase[0])
     }
 
 }
