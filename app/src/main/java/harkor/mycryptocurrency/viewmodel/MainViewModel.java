@@ -14,8 +14,8 @@ public class MainViewModel {
     }
 
     public void addCrypto() {
-        DialogAdd dialogAdd = new DialogAdd();
-        dialogAdd.show(interfaceOfMainActivity.fragmentMenagerGetter(), "add");
+        //DialogAdd dialogAdd = new DialogAdd();
+        //dialogAdd.show(interfaceOfMainActivity.fragmentMenagerGetter(), "add");
     }
 
     public void refresh(OverallPrice overallPrice) {

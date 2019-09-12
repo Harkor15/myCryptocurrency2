@@ -19,14 +19,18 @@ import harkor.mycryptocurrency.viewmodels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
-class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,InterfaceOfMainActivity*/() {
+class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements ListRefresh,OverallPrice,InterfaceOfMainActivity*/ {
+
+
     //private val mAdView: AdView? = null
     private var mainActivityViewModel: MainActivityViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        //mainActivityViewModel!!.forMigrationTesting()
         mainActivityViewModel!!.getAmount()
                 .observe(this, Observer { s -> text_money_amount!!.text = s })
 
@@ -45,18 +49,29 @@ class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,Int
                 progress_bar.visibility=View.INVISIBLE
             }
         })
+        image_add.setOnClickListener {
+            val dialogAdd=DialogAdd(this)
+            dialogAdd.show(supportFragmentManager,"adddialog")
+
+        }
+
+
+
+
+
 
         /////////////////////////////////////////////////////////////////////////////
         val recyclerView = list
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val cryptocurrencys = ArrayList<Cryptocurrency>()
+        var cryptocurrencys = ArrayList<Cryptocurrency>()
         val details = ArrayList<Details>()
         details.add(Details("Bitcoin", "22-22-2222"))
         cryptocurrencys.add(Cryptocurrency("BTC", 0.00000001, details))
         cryptocurrencys.add(Cryptocurrency("BTC", 0.00000001, details))
         cryptocurrencys.add(Cryptocurrency("BTC", 0.00000001, details))
-        val adapter = DetailsAdapter(cryptocurrencys)
+        var adapter = DetailsAdapter(cryptocurrencys)
         recyclerView.adapter = adapter
+
         /*////////////////////////////////////////////////////////////////////////////
         val db= Room.databaseBuilder(
                 applicationContext, AppDatabase::class.java,"database-name"
@@ -64,12 +79,19 @@ class MainActivity : AppCompatActivity /*implements ListRefresh,OverallPrice,Int
         */////////////////////////////////////////////////////////////////////////////
         //val dbFile=applicationContext.getDatabasePath("Cryptocurrency.db")
 
-        for(i in 1..2){
-            Log.d("My crypto", i.toString())
-            mainActivityViewModel!!.getAllPrice()
+        image_refresh.setOnClickListener {//TODO: Delete
+            //recyclerView.adapter!!.
+            cryptocurrencys.add(Cryptocurrency("BTC", 0.00000001, details))
+            cryptocurrencys.add(Cryptocurrency("BTC", 0.00000001, details))
+            //adapter= DetailsAdapter(cryptocurrencys)
+            adapter= DetailsAdapter(cryptocurrencys)
+            recyclerView.adapter=adapter
         }
 
+    }
 
+    override fun addNewCrypto(name: String, amount: Double) {
+        mainActivityViewModel!!.addNewCrypto(name,amount)
     }
     /*
     @Override

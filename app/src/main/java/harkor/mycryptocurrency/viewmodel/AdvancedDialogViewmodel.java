@@ -3,7 +3,7 @@ package harkor.mycryptocurrency.viewmodel;
 import android.util.Log;
 
 import harkor.mycryptocurrency.Interfaces.SingleResponseForAdvanced;
-import harkor.mycryptocurrency.model.Cryptocurrency;
+import harkor.mycryptocurrency.services.Cryptocurrency;
 import harkor.mycryptocurrency.services.RetrofitInterface;
 import harkor.mycryptocurrency.Interfaces.AdvancedDialogInterface;
 
@@ -19,26 +19,26 @@ public class AdvancedDialogViewmodel implements SingleResponseForAdvanced{
         cryptocurrency=adi.getCrypto();
     }
     public void startViewModel(){
-        adi.setNameText(cryptocurrency.tag);
-        adi.setAmountText(cryptocurrency.amount+"");
-        adi.setTimeText(cryptocurrency.date);
-        adi.setAddPriceText(addCurrencyTag(addPrice()+""));
-        adi.setAddValueText(addCurrencyTag((doubleFormat.format(addPrice()*cryptocurrency.amount)+"")));
-        RetrofitInterface retrofitInterface=new RetrofitInterface();
-        retrofitInterface.actualPrice(cryptocurrency.tag,cryptoCode,this);
+        //adi.setNameText(cryptocurrency.tag);
+        //adi.setAmountText(cryptocurrency.amount+"");
+        //adi.setTimeText(cryptocurrency.date);
+        //adi.setAddPriceText(addCurrencyTag(addPrice()+""));
+        //adi.setAddValueText(addCurrencyTag((doubleFormat.format(addPrice()*cryptocurrency.amount)+"")));
+        //RetrofitInterface retrofitInterface=new RetrofitInterface();
+        //retrofitInterface.actualPrice(cryptocurrency.tag,cryptoCode,this);
     }
 
     private double addPrice(){
         double price=0;
         switch (cryptoCode){
             case 1:
-                price=cryptocurrency.priceUsd;break;
+                //price=cryptocurrency.priceUsd;break;
             case 2:
-                price=cryptocurrency.priceEur; break;
+                //price=cryptocurrency.priceEur; break;
             case 3:
-                price=cryptocurrency.pricePln; break;
+                //price=cryptocurrency.pricePln; break;
             case 4:
-                price=cryptocurrency.priceBtc; break;
+                //price=cryptocurrency.priceBtc; break;
         }
 
         return  price;
@@ -56,10 +56,10 @@ public class AdvancedDialogViewmodel implements SingleResponseForAdvanced{
 
     @Override
     public void actualPrice(double price) {
-        adi.setBalanceText(addCurrencyTag(doubleFormat.format((price*cryptocurrency.amount)-(addPrice()*cryptocurrency.amount)))+"");
-        adi.setActualPriceText(addCurrencyTag(price+""));
-        adi.setActualValueText(addCurrencyTag(doubleFormat.format(price*cryptocurrency.amount)+""));
-        adi.setBalancePercentText((doubleFormat.format((((price/addPrice())*100)-100)))+"%");
+        //adi.setBalanceText(addCurrencyTag(doubleFormat.format((price*cryptocurrency.amount)-(addPrice()*cryptocurrency.amount)))+"");
+        //adi.setActualPriceText(addCurrencyTag(price+""));
+        //adi.setActualValueText(addCurrencyTag(doubleFormat.format(price*cryptocurrency.amount)+""));
+        //adi.setBalancePercentText((doubleFormat.format((((price/addPrice())*100)-100)))+"%");
     }
 
     @Override

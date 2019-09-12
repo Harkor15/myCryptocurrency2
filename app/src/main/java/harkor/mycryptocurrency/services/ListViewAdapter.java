@@ -41,8 +41,8 @@ public class ListViewAdapter extends BaseAdapter{
     public View getView(int i, View view, ViewGroup viewGroup) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         view=inflater.inflate(R.layout.simple_list_item,null);
-        TextView name=view.findViewById(R.id.text_name);
-        TextView amount=view.findViewById(R.id.text_amount);
+        TextView name=view.findViewById(R.id.add_text_name);
+        TextView amount=view.findViewById(R.id.add_text_amount);
         name.setText(names.get(i));
         amount.setText(""+amounts.get(i));
         return view;

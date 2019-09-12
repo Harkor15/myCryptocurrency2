@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/text_name"
+        android:id="@+id/add_text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -31,18 +31,18 @@
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_info_outline_black_48dp" />
+        android:src="@drawable/ic_info_outline_black_48dp" />
 
     <TextView
-        android:id="@+id/text_amount"
+        android:id="@+id/add_text_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0.02"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/text_name"
+        app:layout_constraintBottom_toBottomOf="@+id/add_text_name"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="@+id/text_name" />
+        app:layout_constraintTop_toTopOf="@+id/add_text_name" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

@@ -17,7 +17,7 @@ import android.widget.Toast;
 import harkor.mycryptocurrency.Interfaces.AdvancedDialogInterface;
 import harkor.mycryptocurrency.Interfaces.ListRefresh;
 import harkor.mycryptocurrency.R;
-import harkor.mycryptocurrency.model.Cryptocurrency;
+import harkor.mycryptocurrency.services.Cryptocurrency;
 import harkor.mycryptocurrency.services.DatabaseController;
 import harkor.mycryptocurrency.viewmodel.AdvancedDialogViewmodel;
 
@@ -60,7 +60,7 @@ public class DialogAdvanced extends DialogFragment implements AdvancedDialogInte
             public void onClick(View view) {
                 if((System.currentTimeMillis()-mSecDelete)<2000){
                     DatabaseController db=new DatabaseController(mView.getContext());
-                    db.deleteCrypto(cryptoID);
+                    //db.deleteCrypto(cryptoID); //COMENTED BACAUSE OF OLD DATABASE
                     getDialog().cancel();
                     listRefresh.refresh();
                 }else{
@@ -126,6 +126,6 @@ public class DialogAdvanced extends DialogFragment implements AdvancedDialogInte
     @Override
     public Cryptocurrency getCrypto() {
         DatabaseController db=new DatabaseController(context);
-        return db.singleCrypto(cryptoID);
+        return null;//db.singleCrypto(cryptoID);
     }
 }

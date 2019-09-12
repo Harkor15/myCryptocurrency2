@@ -2,7 +2,7 @@ package harkor.mycryptocurrency.Interfaces;
 
 import android.content.SharedPreferences;
 
-import harkor.mycryptocurrency.model.Cryptocurrency;
+import harkor.mycryptocurrency.services.Cryptocurrency;
 
 public interface AdvancedDialogInterface {
     void setNameText(String text);

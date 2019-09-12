@@ -8,10 +8,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
-import harkor.mycryptocurrency.AppDataListDatabase
-import harkor.mycryptocurrency.CryptoDataClassEntity
-import harkor.mycryptocurrency.CryptocurrencyInfo
-import harkor.mycryptocurrency.RetrofitInstance
+import harkor.mycryptocurrency.*
+import harkor.mycryptocurrency.services.DatabaseController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -19,12 +17,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
     private var amount: MutableLiveData<String>? = null
     var dataFlag= MutableLiveData<Boolean>()
     private var compositeDisposable: CompositeDisposable?=null
+    val db=Room.databaseBuilder(
+            getApplication<Application>().applicationContext,
+            AppDataListDatabase::class.java,"CryptoDataClassEntity.db"
+    ).build()
 
     private val TAG= "MyCrypto"
 
@@ -54,13 +59,15 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun handleResponse(dataList: List<CryptoDataClassEntity>){
-        Log.d("MyCrypto",dataList.size.toString()) //TODO: Delete!
-        val db=Room.databaseBuilder(
-                getApplication<Application>().applicationContext,
-                AppDataListDatabase::class.java,"CryptoDataClassEntity.db"
-        ).build()
         GlobalScope.launch {
             db.cryptoDataListDao().insertDataList(dataList)
+            val oldDatabaseFile=getApplication<Application>().getDatabasePath("Cryptocurrency.db")
+            if(oldDatabaseFile.exists()){
+               Log.d(TAG,"Migration needed!")
+               migrateOldDatabase()
+            }else{
+                Log.d(TAG,"Migranion not needed!")
+            }
             withContext(Dispatchers.Main){dataFlag.value=true}
         }
     }
@@ -74,14 +81,14 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         }, 5000)
     }
 
-    fun getAllPrice(){
+    /*fun getAllPrice(){
         RetrofitInstance.requestInterface.getAllCryptoPrices()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::allPricecsHandleSucces,this::allPricesHandleError)
 
 
-    }
+    }*/
     private fun allPricecsHandleSucces(priceData:CryptocurrencyInfo){
         //Log.d(TAG,"Succes response amount: ${priceData.size}")
         Log.d(TAG,"First record: ${priceData}")
@@ -91,5 +98,63 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         Log.d(TAG,"ERROR Retrofit: $error")
     }
 
+    private fun migrateOldDatabase(){
+        val oldDatabase=DatabaseController(getApplication<Application>().applicationContext)
+        val allData=oldDatabase.fullTable().toList()
+        for(crypto in allData){
+            val dataListInfo=db.cryptoDataListDao().getCryptoFromSymbol(crypto.tag)
+            val newOwnedCrypto=CryptocurrencyOwnedEntity(0,dataListInfo.id,dataListInfo.name,
+                    dataListInfo.symbol,crypto.amount,crypto.date,crypto.priceUsd,
+                    crypto.priceEur,crypto.pricePln,crypto.priceBtc)
+            db.cryptocurrencyOwnedDao().insertNewOwnedCryptocurrency(newOwnedCrypto)
+        }
+        val oldDatabaseFile=getApplication<Application>().getDatabasePath("Cryptocurrency.db")
+        if(oldDatabaseFile.exists()){
+            oldDatabaseFile.delete()
+            Log.d(TAG,"Old Database deleted Exist: ${oldDatabaseFile.exists()}")
+        }
+    }
 
+    fun forMigrationTesting(){ //TODO: DELETE!!!!
+        val oldDatabase=DatabaseController(getApplication<Application>().applicationContext)
+        oldDatabase.addCrypto("BTC",0.01,"19-02-2019",1000.0,900.0,40000.0,1.0)
+        oldDatabase.addCrypto("LSK",10.2,"19-02-2019",1000.0,900.0,40000.0,1.0)
+        val oldDatabaseFile=getApplication<Application>().getDatabasePath("Cryptocurrency.db")
+        Log.d(TAG,"Database: ${oldDatabaseFile.exists()}")
+    }
+
+    fun addNewCrypto(name:String, amount:Double){
+        GlobalScope.launch{
+            val cryptoDataInfo=db.cryptoDataListDao().getCryptoFromSymbol(name)
+            if(cryptoDataInfo!=null){ //It's not always true!
+               RetrofitInstance.requestInterface.getCryptoPrices(cryptoDataInfo.id).observeOn(AndroidSchedulers.mainThread())
+                       .subscribeOn(Schedulers.io())
+                       .subscribe({cryptoInfo->
+                           val currentDate=SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format (Date())
+                           val decimalFormat=DecimalFormat("0.00")
+                           val newCrypto=CryptocurrencyOwnedEntity(0,cryptoDataInfo.id,cryptoDataInfo.name,cryptoDataInfo.symbol,amount,
+                                   currentDate,decimalFormat.format(cryptoInfo.quotes.USD.price.toDouble()).toDouble(),
+                                   decimalFormat.format(cryptoInfo.quotes.EUR.price.toDouble()).toDouble(),
+                                   decimalFormat.format(cryptoInfo.quotes.PLN.price.toDouble()).toDouble(),
+                                   cryptoInfo.quotes.BTC.price.toDouble()
+                           )
+                           Log.d(TAG, "New crypto to add: $newCrypto")
+                           GlobalScope.launch{
+                               db.cryptocurrencyOwnedDao().insertNewOwnedCryptocurrency(newCrypto)
+                               //TODO: Display new crypto!
+                           }
+                       },{ error ->
+                           Log.d(TAG, "Error: $error")
+                       })
+            }else{
+                Log.d(TAG, "Uncorrect name crypto")
+            }
+        }
+
+        //is name on list  if()
+
+        //else
+
+        //
+    }
 }

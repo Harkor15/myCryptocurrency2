@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import android.widget.Toast
 import harkor.mycryptocurrency.R
-import harkor.mycryptocurrency.model.Cryptocurrency
-import harkor.mycryptocurrency.model.FeedDatabase
 import java.util.*
 
 class DatabaseController(internal var context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -23,21 +21,20 @@ class DatabaseController(internal var context: Context) : SQLiteOpenHelper(conte
         values.put(FeedDatabase.COLUMN_NAME_PRICE_EUR, priceEur)
         values.put(FeedDatabase.COLUMN_NAME_PRICE_PLN, pricePln)
         values.put(FeedDatabase.COLUMN_NAME_PRICE_BTC, priceBtc)
-        db.insert(FeedDatabase.TABLE_NAME,
-                null, values)
+        db.insert(FeedDatabase.TABLE_NAME,null, values)
         db.close()
         Log.d("MyCrypto", "DB add success!")
         Toast.makeText(context, R.string.db_addes, Toast.LENGTH_SHORT).show()
 
     }
 
-    fun deleteCrypto(id: Int) {
+    /*fun deleteCrypto(id: Int) {
         val db = writableDatabase
         val selection = FeedDatabase.COLUMN_NAME_ID + " LIKE ?"
         val selectionArgs = arrayOf(id.toString() + "")
         db.delete(FeedDatabase.TABLE_NAME, selection, selectionArgs)
         db.close()
-    }
+    }*/
 
     fun fullTable(): LinkedList<Cryptocurrency> {
         val db = readableDatabase
@@ -62,7 +59,7 @@ class DatabaseController(internal var context: Context) : SQLiteOpenHelper(conte
         return table
     }
 
-    fun smallTable(): LinkedList<Cryptocurrency> {
+   /* fun smallTable(): LinkedList<Cryptocurrency> {
         val db = readableDatabase
         val sortOrder = FeedDatabase.COLUMN_NAME_ID + " ASC"
         val cursor = db.query(FeedDatabase.TABLE_NAME, null, null, null, null, null, sortOrder)
@@ -78,9 +75,9 @@ class DatabaseController(internal var context: Context) : SQLiteOpenHelper(conte
         cursor.close()
         db.close()
         return table
-    }
+    }*/
 
-    fun singleCrypto(id: Int): Cryptocurrency {
+    /*fun singleCrypto(id: Int): Cryptocurrency {
         val db = readableDatabase
         val selection = FeedDatabase.COLUMN_NAME_ID + " = ?"
         val selectionArgs = arrayOf("" + id)
@@ -101,19 +98,13 @@ class DatabaseController(internal var context: Context) : SQLiteOpenHelper(conte
                 cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_PLN)),
                 cursor.getDouble(cursor.getColumnIndexOrThrow(FeedDatabase.COLUMN_NAME_PRICE_BTC))
         )
-    }
+    }*/
 
     override fun onCreate(sqLiteDatabase: SQLiteDatabase) {
         sqLiteDatabase.execSQL(SQL_CREATE)
-        Log.d("MyCrypto", "Database created!")
     }
 
     override fun onUpgrade(sqLiteDatabase: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        Log.d(Companion.TAG,"Migration from $oldVersion to $newVersion")
-        if(oldVersion==1){
-
-        }
-
     }
 
     companion object {
@@ -127,8 +118,31 @@ class DatabaseController(internal var context: Context) : SQLiteOpenHelper(conte
                 FeedDatabase.COLUMN_NAME_PRICE_PLN + " DOUBLE, " +
                 FeedDatabase.COLUMN_NAME_PRICE_BTC + " DOUBLE)"
         private val SQL_DELETE = "DROP TABLE IF EXISTS " + FeedDatabase.TABLE_NAME
-        val DATABASE_VERSION = 2
+        val DATABASE_VERSION = 1
         val DATABASE_NAME = "Cryptocurrency.db"
-        private const val TAG="MyCrypto"
     }
 }
+
+
+object FeedDatabase {
+    const val TABLE_NAME = "cryptocurrency"
+    const val COLUMN_NAME_ID = "id"
+    const val COLUMN_NAME_TAG = "tag"
+    const val COLUMN_NAME_AMOUNT = "amount"
+    const val COLUMN_NAME_DATE = "date"
+    const val COLUMN_NAME_PRICE_USD = "priceusd"
+    const val COLUMN_NAME_PRICE_EUR = "priceeur"
+    const val COLUMN_NAME_PRICE_PLN = "pricepln"
+    const val COLUMN_NAME_PRICE_BTC = "pricebtc"
+}
+
+data class Cryptocurrency (
+    var id: Int ,
+    var tag: String,
+    var amount: Double,
+    var date: String,
+    var priceUsd: Double,
+    var priceEur: Double,
+    var pricePln: Double,
+    var priceBtc: Double
+)

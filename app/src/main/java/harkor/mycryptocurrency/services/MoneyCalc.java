@@ -5,7 +5,7 @@ import java.util.Map;
 
 import harkor.mycryptocurrency.Interfaces.MultiResponseForMoneyCalc;
 import harkor.mycryptocurrency.model.CryptoPrices;
-import harkor.mycryptocurrency.model.Cryptocurrency;
+import harkor.mycryptocurrency.services.Cryptocurrency;
 import harkor.mycryptocurrency.services.DatabaseController;
 import harkor.mycryptocurrency.services.RetrofitInterface;
 import harkor.mycryptocurrency.Interfaces.OverallPrice;
@@ -22,13 +22,13 @@ public class MoneyCalc implements MultiResponseForMoneyCalc {
         this.overallPrice = overallPrice;
     }
     public void goGoGo(){
-        smallTable=db.smallTable();
+        //smallTable=db.smallTable();
         currencyTag=overallPrice.getCurrencyId();
         RetrofitInterface retrofitInterface=new RetrofitInterface();
         if(smallTable.size()!=0){
             String names="";
             for(int i=0;i<smallTable.size();i++){
-                names+=smallTable.get(i).tag+",";
+               // names+=smallTable.get(i).tag+",";
             }
             retrofitInterface.multiCrypto(names,this);
         }else{
@@ -37,7 +37,7 @@ public class MoneyCalc implements MultiResponseForMoneyCalc {
     }
 
     @Override
-    public void giveResponseToCalc( Map<String,CryptoPrices> pricesMap) {
+    public void giveResponseToCalc( Map<String,CryptoPrices> pricesMap) {/*
         double sum=0;
         for(int i=0;i<smallTable.size();i++){
             CryptoPrices cryptoPrices=pricesMap.get(smallTable.get(i).tag);
@@ -59,5 +59,6 @@ public class MoneyCalc implements MultiResponseForMoneyCalc {
         String sumTxt=doubleFormat.format(sum);
         sumTxt=AddCurrencySign.addCurrencySign(currencyTag,sumTxt);
         overallPrice.setOverallPrice(sumTxt);
+        */
     }
 }

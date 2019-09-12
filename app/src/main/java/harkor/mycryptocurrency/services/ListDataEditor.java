@@ -2,9 +2,8 @@ package harkor.mycryptocurrency.services;
 
 import java.util.LinkedList;
 
-import harkor.mycryptocurrency.model.Cryptocurrency;
-import harkor.mycryptocurrency.services.DatabaseController;
 
+//TODO: DELETE whole file
 public class ListDataEditor {
     LinkedList<Cryptocurrency> fullCrypto;
     DatabaseController db;
@@ -17,7 +16,7 @@ public class ListDataEditor {
     public LinkedList<String> getNames() {
         LinkedList<String> names=new LinkedList<>();
         for(int i=0;i<fullCrypto.size();i++){
-            names.add(fullCrypto.get(i).tag);
+            //names.add(fullCrypto.get(i).tag);
         }
         return names;
     }
@@ -25,12 +24,12 @@ public class ListDataEditor {
     public LinkedList<Double> getAmounts() {
         LinkedList<Double> amounts=new LinkedList<>();
         for(int i=0;i<fullCrypto.size();i++){
-            amounts.add(fullCrypto.get(i).amount);
+            //amounts.add(fullCrypto.get(i).amount);
         }
         return amounts;
     }
 
     public int dbId(int number){
-        return fullCrypto.get(number).id;
+        return 1; //fullCrypto.get(number).id;
     }
 }

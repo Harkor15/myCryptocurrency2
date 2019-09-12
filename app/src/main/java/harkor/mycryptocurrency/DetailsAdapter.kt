@@ -6,8 +6,11 @@ import android.view.ViewGroup
 
 import com.thoughtbot.expandablerecyclerview.ExpandableRecyclerViewAdapter
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
+import com.thoughtbot.expandablerecyclerview.viewholders.ChildViewHolder
+import com.thoughtbot.expandablerecyclerview.viewholders.GroupViewHolder
 
-class DetailsAdapter(groups: List<ExpandableGroup<*>>) : ExpandableRecyclerViewAdapter<CryptoViewHolder, DetailsViewHolder>(groups) {
+
+class DetailsAdapter(groups: List<ExpandableGroup<*>>) : CustomExpandableRecyclerViewAdapter<CryptoViewHolder, DetailsViewHolder>(groups) {
 
     override fun onCreateGroupViewHolder(parent: ViewGroup, viewType: Int): CryptoViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.expandable_recyclerview_crypto, parent, false)
@@ -25,11 +28,26 @@ class DetailsAdapter(groups: List<ExpandableGroup<*>>) : ExpandableRecyclerViewA
     }
 
     override fun onBindGroupViewHolder(holder: CryptoViewHolder, flatPosition: Int, group: ExpandableGroup<*>) {
-        val cryptocurrency = group as Cryptocurrency
+        var cryptocurrency = group as Cryptocurrency
         holder.bind(cryptocurrency)
     }
 
-    public fun setCryptocurrencys(){
+    fun addAll(groups: MutableList<Details>) {
+        //(getGroups() as ArrayList<*>).addAll(groups)
 
+        (getGroups() as MutableList<*>)
+        notifyGroupDataChanged()
+        notifyDataSetChanged()
+    }
+}
+
+
+abstract class CustomExpandableRecyclerViewAdapter<GVH : GroupViewHolder, CVH : ChildViewHolder>(groups: List<ExpandableGroup<*>>) : ExpandableRecyclerViewAdapter<GVH, CVH>(groups) {
+
+    fun notifyGroupDataChanged() {
+        expandableList.expandedGroupIndexes = BooleanArray(groups.size)
+        for (i in 0 until groups.size) {
+            expandableList.expandedGroupIndexes[i] = false
+        }
     }
 }
