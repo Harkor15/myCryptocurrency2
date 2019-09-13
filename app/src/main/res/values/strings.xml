@@ -18,4 +18,5 @@
     <string name="bad_name_amount">Incorrect name or amount</string>
     <string name="connection_error">Connection error</string>
     <string name="add_new_crypto">Add new cryptocurrency</string>
+    <string name="check_internet_connection">Check internet connection</string>
 </resources>

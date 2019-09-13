@@ -65,11 +65,11 @@ class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements Li
             data->val adapter = DetailsAdapter(data)
             recyclerView.adapter=adapter
         })
-
-        /*////////////////////////////////////////////////////////////////////////////
         image_refresh.setOnClickListener {
-            mainActivityViewModel!!.adapterDataForTest()
+            mainActivityViewModel!!.getAllPrice()
         }
+        /*////////////////////////////////////////////////////////////////////////////
+
 
 
 

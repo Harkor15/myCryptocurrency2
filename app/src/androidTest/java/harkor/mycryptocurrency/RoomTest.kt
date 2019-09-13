@@ -46,7 +46,7 @@ class EnityReadWriteTest {
     @Test
     @Throws(Exception::class)
     fun writeAndReadInCryptocurrencyOwned() {
-        val newOwnedEntity = CryptocurrencyOwnedEntity(1, "btc-bitcoin", "Bitcoin",
+        val newOwnedEntity = CryptocurrencyOwnedEntity(1, "bitcoin", "Bitcoin",
                 "BTC", 1.3, "10.09.2019",
                 10000.0, 9000.0, 40000.0, 1.0)
         cryptocurrencyOwnedDao.insertNewOwnedCryptocurrency(newOwnedEntity)
