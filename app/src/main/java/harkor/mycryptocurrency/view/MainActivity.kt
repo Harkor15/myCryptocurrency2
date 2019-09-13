@@ -52,7 +52,11 @@ class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements Li
         image_add.setOnClickListener {
             val dialogAdd=DialogAdd(this)
             dialogAdd.show(supportFragmentManager,"adddialog")
+        }
 
+        image_settings.setOnClickListener{
+            val dialogSettings=DialogSettings()
+            dialogSettings.show(supportFragmentManager,"settingsdialog")
         }
 
 

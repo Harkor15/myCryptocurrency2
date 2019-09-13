@@ -24,7 +24,7 @@ public class MainViewModel {
     }
 
     public void settings() {
-        new DialogSettings().show(interfaceOfMainActivity.fragmentMenagerGetter(), "settings");
+        //new DialogSettings().show(interfaceOfMainActivity.fragmentMenagerGetter(), "settings");
     }
     /*public void itemClick(int i){
         Bundle bundle=new Bundle();

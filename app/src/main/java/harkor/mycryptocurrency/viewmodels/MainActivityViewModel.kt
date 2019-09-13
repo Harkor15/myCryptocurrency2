@@ -103,10 +103,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         val allData=oldDatabase.fullTable().toList()
         for(crypto in allData){
             val dataListInfo=db.cryptoDataListDao().getCryptoFromSymbol(crypto.tag)
-            val newOwnedCrypto=CryptocurrencyOwnedEntity(0,dataListInfo.id,dataListInfo.name,
-                    dataListInfo.symbol,crypto.amount,crypto.date,crypto.priceUsd,
-                    crypto.priceEur,crypto.pricePln,crypto.priceBtc)
-            db.cryptocurrencyOwnedDao().insertNewOwnedCryptocurrency(newOwnedCrypto)
+            if(dataListInfo!=null){//!!!
+                val newOwnedCrypto=CryptocurrencyOwnedEntity(0,dataListInfo.id,dataListInfo.name,
+                        dataListInfo.symbol,crypto.amount,crypto.date,crypto.priceUsd,
+                        crypto.priceEur,crypto.pricePln,crypto.priceBtc)
+                db.cryptocurrencyOwnedDao().insertNewOwnedCryptocurrency(newOwnedCrypto)
+            }
         }
         val oldDatabaseFile=getApplication<Application>().getDatabasePath("Cryptocurrency.db")
         if(oldDatabaseFile.exists()){
@@ -126,7 +128,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     fun addNewCrypto(name:String, amount:Double){
         GlobalScope.launch{
             val cryptoDataInfo=db.cryptoDataListDao().getCryptoFromSymbol(name)
-            if(cryptoDataInfo!=null){ //It's not always true!
+            if(cryptoDataInfo!=null){ //!!!
                RetrofitInstance.requestInterface.getCryptoPrices(cryptoDataInfo.id).observeOn(AndroidSchedulers.mainThread())
                        .subscribeOn(Schedulers.io())
                        .subscribe({cryptoInfo->
@@ -151,10 +153,5 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             }
         }
 
-        //is name on list  if()
-
-        //else
-
-        //
     }
 }
