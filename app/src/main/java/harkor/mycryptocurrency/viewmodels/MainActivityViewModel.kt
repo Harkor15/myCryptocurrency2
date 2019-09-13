@@ -20,10 +20,14 @@ import kotlinx.coroutines.withContext
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivityViewModel(application: Application) : AndroidViewModel(application) {
-    private var amount: MutableLiveData<String>? = null
+    private val TAG= "MyCrypto"
+    val cryptocurrencys=ArrayList<Cryptocurrency>()
+    private lateinit var amount: MutableLiveData<String>
+    private lateinit var cryptoData: MutableLiveData<ArrayList<Cryptocurrency>>
     var dataFlag= MutableLiveData<Boolean>()
     private var compositeDisposable: CompositeDisposable?=null
     val db=Room.databaseBuilder(
@@ -31,12 +35,23 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             AppDataListDatabase::class.java,"CryptoDataClassEntity.db"
     ).build()
 
-    private val TAG= "MyCrypto"
+
 
     fun getAmount(): LiveData<String> {
         amount = MutableLiveData()
-        amount!!.setValue("$1000000")
-        return amount as MutableLiveData<String>
+        amount.value = "$1000000"
+        return amount
+    }
+    fun getCryptoData(): MutableLiveData<ArrayList<Cryptocurrency>> {
+        cryptoData= MutableLiveData()
+        cryptoData.value=ArrayList()
+        return cryptoData
+    }
+    fun adapterDataForTest(){
+        val details = ArrayList<Details>()
+        details.add(Details("Bitcoin", "22-22-2222"))
+        cryptocurrencys.add(Cryptocurrency("BTC", 0.00000001, details))
+        cryptoData.value=(cryptocurrencys)
     }
 
     fun isDataDownloaded(): MutableLiveData<Boolean> {
@@ -48,7 +63,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         return dataFlag
     }
 
-    fun getDataListFromApi(){
+    private fun getDataListFromApi(){
         Log.d(TAG, "add observer")
         compositeDisposable= CompositeDisposable()
         compositeDisposable?.add(RetrofitInstance.requestInterface.getListData()

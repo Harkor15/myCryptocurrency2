@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements ListRefresh,OverallPrice,InterfaceOfMainActivity*/ {
-
+    private val TAG= "MyCrypto"
 
     //private val mAdView: AdView? = null
     private var mainActivityViewModel: MainActivityViewModel? = null
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements Li
         setContentView(R.layout.activity_main)
 
         mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        //mainActivityViewModel!!.forMigrationTesting()
+        //mainActivityViewModel!!.forMigrationTesting() //TODO: Delete
         mainActivityViewModel!!.getAmount()
                 .observe(this, Observer { s -> text_money_amount!!.text = s })
 
@@ -59,12 +59,20 @@ class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements Li
             dialogSettings.show(supportFragmentManager,"settingsdialog")
         }
 
+        val recyclerView = list
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        mainActivityViewModel!!.getCryptoData().observe(this,Observer{
+            data->val adapter = DetailsAdapter(data)
+            recyclerView.adapter=adapter
+        })
+
+        /*////////////////////////////////////////////////////////////////////////////
+        image_refresh.setOnClickListener {
+            mainActivityViewModel!!.adapterDataForTest()
+        }
 
 
 
-
-
-        /////////////////////////////////////////////////////////////////////////////
         val recyclerView = list
         recyclerView.layoutManager = LinearLayoutManager(this)
         var cryptocurrencys = ArrayList<Cryptocurrency>()
@@ -91,7 +99,7 @@ class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements Li
             adapter= DetailsAdapter(cryptocurrencys)
             recyclerView.adapter=adapter
         }
-
+      */
     }
 
     override fun addNewCrypto(name: String, amount: Double) {
