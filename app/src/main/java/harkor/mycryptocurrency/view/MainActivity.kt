@@ -11,13 +11,13 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import harkor.mycryptocurrency.Cryptocurrency
-import harkor.mycryptocurrency.Details
-import harkor.mycryptocurrency.DetailsAdapter
-import harkor.mycryptocurrency.R
+import harkor.mycryptocurrency.*
 import harkor.mycryptocurrency.viewmodels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import androidx.recyclerview.widget.SimpleItemAnimator
+
+
 
 class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements ListRefresh,OverallPrice,InterfaceOfMainActivity*/ {
     private val TAG= "MyCrypto"
@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements Li
         mainActivityViewModel!!.getAmount()
                 .observe(this, Observer { s -> text_money_amount!!.text = s })
 
-
         MobileAds.initialize(this, resources.getString( R.string.banner_ad_unit_id))
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
@@ -49,6 +48,7 @@ class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements Li
                 progress_bar.visibility=View.INVISIBLE
             }
         })
+
         image_add.setOnClickListener {
             val dialogAdd=DialogAdd(this)
             dialogAdd.show(supportFragmentManager,"adddialog")
@@ -61,13 +61,17 @@ class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements Li
 
         val recyclerView = list
         recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter=RecyclerAdapter(ArrayList())
+        recyclerView.adapter=adapter
+        //(recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
+        //recyclerView.setHasFixedSize(true)
         mainActivityViewModel!!.getCryptoData().observe(this,Observer{
-            data->val adapter = DetailsAdapter(data)
-            recyclerView.adapter=adapter
+            data->
+            adapter.dataSet=data
+            adapter.notifyDataSetChanged()
         })
-        image_refresh.setOnClickListener {
-            mainActivityViewModel!!.getAllPrice()
-        }
+        mainActivityViewModel!!.getAllPrice()
+
         /*////////////////////////////////////////////////////////////////////////////
 
 

@@ -28,7 +28,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     var cryptoFullInfoList = ArrayList<CryptoFullInfo>()
     val cryptocurrencys = ArrayList<Cryptocurrency>()
     private lateinit var amount: MutableLiveData<String>
-    private lateinit var cryptoData: MutableLiveData<ArrayList<Cryptocurrency>>
+    private lateinit var cryptoData: MutableLiveData<ArrayList<CryptoFullInfo>>
     var dataFlag = MutableLiveData<Boolean>()
     private var compositeDisposable: CompositeDisposable? = null
     val db = Room.databaseBuilder(
@@ -43,7 +43,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         return amount
     }
 
-    fun getCryptoData(): MutableLiveData<ArrayList<Cryptocurrency>> {
+    fun getCryptoData(): MutableLiveData<ArrayList<CryptoFullInfo>> {
         cryptoData = MutableLiveData()
         cryptoData.value = ArrayList()
         return cryptoData
@@ -53,7 +53,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         val details = ArrayList<Details>()
         details.add(Details("Bitcoin", "22-22-2222"))
         cryptocurrencys.add(Cryptocurrency("BTC", 0.00000001, details))
-        cryptoData.value = (cryptocurrencys)
+        //cryptoData.value = (cryptocurrencys)
     }
 
     fun isDataDownloaded(): MutableLiveData<Boolean> {
@@ -129,6 +129,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                         }
                     }
                     Log.d(TAG, "All data ready: /n $cryptoFullInfoList") //TODO: SHOW DATA!!!
+                    cryptoData.value=cryptoFullInfoList
+                    amount.value="$1010101"
                 }, { error: Throwable ->
                     Log.d(TAG, "ERROR Retrofit: $error")
                     Toast.makeText(getApplication<Application>().applicationContext, R.string.check_internet_connection, Toast.LENGTH_SHORT).show()

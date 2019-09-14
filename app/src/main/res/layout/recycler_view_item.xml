@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/recycler_background_first"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_tag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:color/holo_green_dark" />
+
+    <ImageView
+        android:id="@+id/recycler_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_tag"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recycler_tag" />
+
+    <TextView
+        android:id="@+id/recycler_tag"
+        style="@style/TextColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="BTC"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/recycler_arrow"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/recycler_amount"
+        style="@style/TextColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="0.00000001"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recycler_tag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/recycler_tag" />
+
+    <LinearLayout
+        android:id="@+id/recycler_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/recycler_background_first">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/recycler_background_second"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/button2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/recycler_delete_ico"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/ic_delete_black_48dp"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_name"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/recycler_name" />
+
+            <TextView
+                android:id="@+id/recycler_historical_prices"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="$87.78 ($8778.49)"
+                app:layout_constraintStart_toEndOf="@+id/recycler_dash"
+                app:layout_constraintTop_toTopOf="@+id/recycler_dash" />
+
+            <TextView
+                android:id="@+id/recycler_name"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="8dp"
+                android:text="Bitcoin"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/recycler_actual_price"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="BTC - $10670.96"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="@+id/recycler_date"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_date" />
+
+            <TextView
+                android:id="@+id/recycler_balance_percentage"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="+21.56%"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/recycler_actual_value"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_actual_value" />
+
+            <TextView
+                android:id="@+id/recycler_balance_value"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="($18.92)"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@+id/recycler_balance_percentage"
+                app:layout_constraintTop_toTopOf="@+id/recycler_balance_percentage" />
+
+            <TextView
+                android:id="@+id/recycler_actual_value"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="$106.71"
+                android:textSize="36sp"
+                app:layout_constraintStart_toStartOf="@+id/recycler_actual_price"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_actual_price" />
+
+            <TextView
+                android:id="@+id/recycler_date"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="2019.05.27"
+                app:layout_constraintStart_toStartOf="@+id/recycler_name"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_name" />
+
+            <TextView
+                android:id="@+id/recycler_dash"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="-"
+                app:layout_constraintStart_toEndOf="@+id/recycler_date"
+                app:layout_constraintTop_toTopOf="@+id/recycler_date" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
