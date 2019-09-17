@@ -42,7 +42,10 @@ interface CryptocurrencyOwnedDao {
     fun getOwnedCryptocurrencys(): List<CryptocurrencyOwnedEntity>
 
     @Insert
-    fun insertNewOwnedCryptocurrency(newCrypto: CryptocurrencyOwnedEntity)
+    fun insertNewOwnedCryptocurrency(newCrypto: CryptocurrencyOwnedEntity): Long
+
+    @Query("DELETE FROM cryptocurrencyownedentity WHERE id = :id")
+    fun deleteCrypto(vararg id: Int)
 }
 
 

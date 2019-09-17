@@ -11,16 +11,17 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
-import harkor.mycryptocurrency.*
+import harkor.mycryptocurrency.R
+import harkor.mycryptocurrency.RecyclerAdapter
 import harkor.mycryptocurrency.viewmodels.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
-import androidx.recyclerview.widget.SimpleItemAnimator
 
 
+class MainActivity : AppCompatActivity(), NoticeAddDialogListener, NotifyDataDelete,NotifyCurrencyChange /*implements ListRefresh,OverallPrice,InterfaceOfMainActivity*/ {
 
-class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements ListRefresh,OverallPrice,InterfaceOfMainActivity*/ {
-    private val TAG= "MyCrypto"
+    private val TAG = "MyCrypto"
+    private val adapter = RecyclerAdapter(ArrayList(), this)
 
     //private val mAdView: AdView? = null
     private var mainActivityViewModel: MainActivityViewModel? = null
@@ -34,41 +35,40 @@ class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements Li
         mainActivityViewModel!!.getAmount()
                 .observe(this, Observer { s -> text_money_amount!!.text = s })
 
-        MobileAds.initialize(this, resources.getString( R.string.banner_ad_unit_id))
+        MobileAds.initialize(this, resources.getString(R.string.banner_ad_unit_id))
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
 
-        mainActivityViewModel!!.isDataDownloaded().observe(this,Observer{ dataFlag->
-            if(!dataFlag){
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+        mainActivityViewModel!!.isDataDownloaded().observe(this, Observer { dataFlag ->
+            if (!dataFlag) {
+                window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                         WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                progress_bar.visibility= View.VISIBLE
-            }else{
-                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
-                progress_bar.visibility=View.INVISIBLE
+                progress_bar.visibility = View.VISIBLE
+            } else {
+                window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+                progress_bar.visibility = View.INVISIBLE
             }
         })
 
         image_add.setOnClickListener {
-            val dialogAdd=DialogAdd(this)
-            dialogAdd.show(supportFragmentManager,"adddialog")
+            val dialogAdd = DialogAdd(this)
+            dialogAdd.show(supportFragmentManager, "adddialog")
         }
 
-        image_settings.setOnClickListener{
-            val dialogSettings=DialogSettings()
-            dialogSettings.show(supportFragmentManager,"settingsdialog")
+        image_settings.setOnClickListener {
+            val dialogSettings = DialogSettings(this)
+            dialogSettings.show(supportFragmentManager, "settingsdialog")
         }
 
         val recyclerView = list
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter=RecyclerAdapter(ArrayList())
-        recyclerView.adapter=adapter
+        recyclerView.adapter = adapter
         //(recyclerView.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
         //recyclerView.setHasFixedSize(true)
-        mainActivityViewModel!!.getCryptoData().observe(this,Observer{
-            data->
-            adapter.dataSet=data
+        mainActivityViewModel!!.getCryptoData().observe(this, Observer { data ->
+            adapter.dataSet = data
             adapter.notifyDataSetChanged()
+            mainActivityViewModel!!.calculateAmount()
         })
         mainActivityViewModel!!.getAllPrice()
 
@@ -106,9 +106,15 @@ class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements Li
       */
     }
 
-    override fun addNewCrypto(name: String, amount: Double) {
-        mainActivityViewModel!!.addNewCrypto(name,amount)
+    override fun onResume() {
+        super.onResume()
+        Log.d("MyCrypto","Resume")
     }
+
+    override fun addNewCrypto(name: String, amount: Double) {
+        mainActivityViewModel!!.addNewCrypto(name, amount)
+    }
+
     /*
     @Override
     protected void onResume() {
@@ -161,9 +167,16 @@ class MainActivity : AppCompatActivity(),NoticeAddDialogListener /*implements Li
         return new DatabaseController(getApplicationContext());
     }
 */
+    override fun deleted() {
+        mainActivityViewModel!!.calculateAmount()
+    }
+
+    override fun change() {
+        mainActivityViewModel!!.calculateAmount()
+        adapter.notifyDataSetChanged()
+    }
+
 }
-
-
 
 
 /*
@@ -173,3 +186,11 @@ private class ExperimentalAsyncTask : AsyncTask<AppDatabase, Void, String>() {
     }
 
 }*/
+
+interface NotifyDataDelete {
+    fun deleted()
+}
+
+interface NotifyCurrencyChange{
+    fun change()
+}

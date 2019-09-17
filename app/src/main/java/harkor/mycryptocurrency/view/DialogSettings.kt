@@ -9,8 +9,9 @@ import androidx.fragment.app.DialogFragment
 import harkor.mycryptocurrency.R
 import harkor.mycryptocurrency.SharedPref
 import kotlinx.android.synthetic.main.settings_dialog.view.*
+import kotlin.system.measureNanoTime
 
-class DialogSettings : DialogFragment() {
+class DialogSettings(val notifyCurrencyChange: NotifyCurrencyChange) : DialogFragment() {
     lateinit var dialogView: View
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return activity?.let {
@@ -37,6 +38,7 @@ class DialogSettings : DialogFragment() {
                 }
                 if(newCurrency!=currencyId){
                     SharedPref.saveDefaultCurrency(newCurrency,dialogView.context)
+                    notifyCurrencyChange.change()
                 }
                 dialog.cancel()
             }
