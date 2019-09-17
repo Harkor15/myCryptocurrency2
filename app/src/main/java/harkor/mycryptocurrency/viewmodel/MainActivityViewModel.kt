@@ -1,4 +1,4 @@
-package harkor.mycryptocurrency.viewmodels
+package harkor.mycryptocurrency.viewmodel
 
 import android.app.Application
 import android.os.Handler
@@ -9,6 +9,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
 import harkor.mycryptocurrency.*
+import harkor.mycryptocurrency.model.ActualPrices
+import harkor.mycryptocurrency.model.CryptoFullInfo
+import harkor.mycryptocurrency.model.Cryptocurrency
+import harkor.mycryptocurrency.model.CurrencyCalc
 import harkor.mycryptocurrency.services.DatabaseController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -203,8 +207,8 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                                         newCrypto.name,newCrypto.symbol,newCrypto.amount,newCrypto.date,
                                         newCrypto.priceusd,newCrypto.priceeur,newCrypto.pricepln,newCrypto.pricebtc)
 
-                                val addedCrypto=CryptoFullInfo(newCrypto2,ActualPrices(newCrypto.priceusd,
-                                        newCrypto.priceeur,newCrypto.pricepln,newCrypto.pricebtc))
+                                val addedCrypto= CryptoFullInfo(newCrypto2, ActualPrices(newCrypto.priceusd,
+                                        newCrypto.priceeur, newCrypto.pricepln, newCrypto.pricebtc))
                                 withContext(Dispatchers.Main){
                                     cryptoFullInfoList.add(addedCrypto)
                                     cryptoData.value=cryptoFullInfoList
@@ -231,7 +235,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
             }
         }
         val doubleFormat = DecimalFormat("0.00")
-        amount.value=CurrencyCalc.addSign(doubleFormat.format(summaryPrice),defaultCurrency)
+        amount.value= CurrencyCalc.addSign(doubleFormat.format(summaryPrice),defaultCurrency)
     }
 
 }

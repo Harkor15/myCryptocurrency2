@@ -13,7 +13,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import harkor.mycryptocurrency.R
 import harkor.mycryptocurrency.RecyclerAdapter
-import harkor.mycryptocurrency.viewmodels.MainActivityViewModel
+import harkor.mycryptocurrency.viewmodel.MainActivityViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 

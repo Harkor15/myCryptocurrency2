@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import harkor.mycryptocurrency.model.CryptoFullInfo
+import harkor.mycryptocurrency.model.CurrencyCalc
 import harkor.mycryptocurrency.view.NotifyDataDelete
 import kotlinx.android.synthetic.main.recycler_view_item.view.*
 import kotlinx.coroutines.Dispatchers

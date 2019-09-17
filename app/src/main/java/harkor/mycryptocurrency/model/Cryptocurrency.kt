@@ -1,7 +1,9 @@
-package harkor.mycryptocurrency
+package harkor.mycryptocurrency.model
 
 
 import com.thoughtbot.expandablerecyclerview.models.ExpandableGroup
+import harkor.mycryptocurrency.CryptocurrencyOwnedEntity
+import harkor.mycryptocurrency.Details
 
 class Cryptocurrency(title: String, amount: Double?, items: List<Details>) : ExpandableGroup<Details>(title, items)
 
