@@ -19,4 +19,5 @@
     <string name="connection_error">Connection error</string>
     <string name="add_new_crypto">Add new cryptocurrency</string>
     <string name="check_internet_connection">Check internet connection</string>
+    <string name="invalid_cryptocurrency_name">Invalid cryptocurrency name</string>
 </resources>

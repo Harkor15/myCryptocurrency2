@@ -2,7 +2,6 @@ package harkor.mycryptocurrency.viewmodel
 
 import android.app.Application
 import android.os.Handler
-import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -167,11 +166,13 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                                     cryptoData.value = cryptoFullInfoList
                                 }
                             }
-                        }, { error ->
-                            Log.d("MyCrypto", "Error: $error")
+                        }, {
+                            Toast.makeText(getApplication<Application>().applicationContext, R.string.check_internet_connection, Toast.LENGTH_SHORT).show()
                         })
             } else {
-                Log.d("MyCrypto", "Incorrect name crypto")
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(getApplication<Application>().applicationContext, R.string.invalid_cryptocurrency_name, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

@@ -15,4 +15,5 @@
     <string name="sureDelete">Usunąć?</string>
     <string name="add_new_crypto">Dodaj nową kryptowalutę</string>
     <string name="check_internet_connection">Sprawdź połączenie z internetem</string>
+    <string name="invalid_cryptocurrency_name">Błędna nazwa kryptowaluty</string>
 </resources>
