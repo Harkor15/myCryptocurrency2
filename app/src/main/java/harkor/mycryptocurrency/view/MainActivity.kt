@@ -174,6 +174,7 @@ class MainActivity : AppCompatActivity(), NoticeAddDialogListener, NotifyDataDel
     override fun change() {
         mainActivityViewModel!!.calculateAmount()
         adapter.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
     }
 
 }

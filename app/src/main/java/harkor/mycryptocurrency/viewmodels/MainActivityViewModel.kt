@@ -189,13 +189,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                         .subscribeOn(Schedulers.io())
                         .subscribe({ cryptoInfo ->
                             val currentDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
-                            val decimalFormat = DecimalFormat("0.00")
-                            val newCrypto = CryptocurrencyOwnedEntity(0, cryptoDataInfo.id, cryptoDataInfo.name, cryptoDataInfo.symbol, amount,
-                                    currentDate, decimalFormat.format(cryptoInfo[cryptoDataInfo.id]?.get("usd")).toDouble(),
-                                    decimalFormat.format(cryptoInfo[cryptoDataInfo.id]?.get("eur")).toDouble(),
-                                    decimalFormat.format(cryptoInfo[cryptoDataInfo.id]?.get("pln")).toDouble(),
-                                    (cryptoInfo[cryptoDataInfo.id]?.get("btc")
-                                            ?: error("")).toDouble()
+                            val newCrypto = CryptocurrencyOwnedEntity(0, cryptoDataInfo.id,
+                                    cryptoDataInfo.name, cryptoDataInfo.symbol, amount, currentDate,
+                                    cryptoInfo.getValue(cryptoDataInfo.id).getValue("usd"),
+                                    cryptoInfo.getValue(cryptoDataInfo.id).getValue("eur"),
+                                    cryptoInfo.getValue(cryptoDataInfo.id).getValue("pln"),
+                                    cryptoInfo.getValue(cryptoDataInfo.id).getValue("btc")
                             )
                             Log.d(TAG, "New crypto to add: $newCrypto")
                             GlobalScope.launch {
@@ -215,7 +214,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                             Log.d(TAG, "Error: $error")
                         })
             } else {
-                Log.d(TAG, "Uncorrect name crypto")
+                Log.d(TAG, "Incorrect name crypto")
             }
         }
     }

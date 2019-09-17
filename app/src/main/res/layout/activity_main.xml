@@ -56,11 +56,12 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:cropToPadding="false"
+        android:src="@drawable/ic_refresh_black_48dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/image_add"
-        android:src="@drawable/ic_refresh_black_48dp" />
+        app:layout_constraintStart_toEndOf="@+id/image_add" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
