@@ -1,4 +1,4 @@
-package harkor.mycryptocurrency
+package harkor.mycryptocurrency.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,8 +6,11 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import harkor.mycryptocurrency.R
 import harkor.mycryptocurrency.model.CryptoFullInfo
-import harkor.mycryptocurrency.model.CurrencyCalc
+import harkor.mycryptocurrency.services.AppDataListDatabase
+import harkor.mycryptocurrency.services.CurrencyCalc
+import harkor.mycryptocurrency.services.SharedPref
 import harkor.mycryptocurrency.view.NotifyDataDelete
 import kotlinx.android.synthetic.main.recycler_view_item.view.*
 import kotlinx.coroutines.Dispatchers
@@ -23,13 +26,11 @@ class RecyclerAdapter(var dataSet: ArrayList<CryptoFullInfo>, val notifyDataDele
     private var greenColor: Int? = null
     private var redColor: Int? = null
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
         val myView = LayoutInflater.from(parent.context)
                 .inflate(R.layout.recycler_view_item, parent, false)
         greenColor = ContextCompat.getColor(parent.context, R.color.light_green)
         redColor = ContextCompat.getColor(parent.context, R.color.light_red)
-
         return RecyclerViewHolder(myView)
     }
 
@@ -97,9 +98,7 @@ class RecyclerAdapter(var dataSet: ArrayList<CryptoFullInfo>, val notifyDataDele
                 val db = Room.databaseBuilder(holder.myView.context,
                         AppDataListDatabase::class.java, "CryptoDataClassEntity.db"
                 ).build()
-                //Log.d("MyCrypto","1Position: $position size: ${dataSet.size} info: ${dataSet[position].cryptoDbInfo.id}" )
                 db.cryptocurrencyOwnedDao().deleteCrypto(dataSet[position].cryptoDbInfo.id)
-                //Log.d("MyCrypto", "2Position: $position size: ${dataSet.size}")
                 withContext(Dispatchers.Main) {
                     dataSet.removeAt(position)
                     notifyDataSetChanged()
@@ -108,19 +107,4 @@ class RecyclerAdapter(var dataSet: ArrayList<CryptoFullInfo>, val notifyDataDele
             }
         }
     }
-    /*
-    private fun animateExpand(arrow: ImageView) {
-        val rotate = RotateAnimation(360f, 180f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-        rotate.duration = 300
-        rotate.fillAfter = true
-        arrow.animation = rotate
-    }
-
-    private fun animateCollapse( arrow: ImageView) {
-        val rotate = RotateAnimation(180f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-        rotate.duration = 300
-        rotate.fillAfter = true
-        arrow.animation = rotate
-    }
-*/
 }

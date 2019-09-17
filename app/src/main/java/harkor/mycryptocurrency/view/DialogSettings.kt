@@ -7,9 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.DialogFragment
 import harkor.mycryptocurrency.R
-import harkor.mycryptocurrency.SharedPref
+import harkor.mycryptocurrency.services.SharedPref
 import kotlinx.android.synthetic.main.settings_dialog.view.*
-import kotlin.system.measureNanoTime
 
 class DialogSettings(val notifyCurrencyChange: NotifyCurrencyChange) : DialogFragment() {
     lateinit var dialogView: View

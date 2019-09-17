@@ -1,4 +1,4 @@
-package harkor.mycryptocurrency
+package harkor.mycryptocurrency.services
 
 import androidx.room.*
 
@@ -47,7 +47,6 @@ interface CryptocurrencyOwnedDao {
     @Query("DELETE FROM cryptocurrencyownedentity WHERE id = :id")
     fun deleteCrypto(vararg id: Int)
 }
-
 
 @Database(entities = [CryptoDataClassEntity::class, CryptocurrencyOwnedEntity::class], version = 1)
 abstract class AppDataListDatabase : RoomDatabase() {
