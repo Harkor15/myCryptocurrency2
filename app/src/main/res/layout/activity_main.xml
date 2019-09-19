@@ -6,8 +6,19 @@
     android:layout_height="match_parent"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     tools:context=".view.MainActivity"
-    android:background="@drawable/background">
+    >
 
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background_amount_bar" />
 
     <TextView
         android:id="@+id/text_money_amount"
@@ -16,6 +27,7 @@
         android:layout_height="wrap_content"
         android:text="$100.00"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#EEE"
         android:textSize="54sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +41,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/image_add"
-        app:srcCompat="@android:color/holo_green_light" />
+        android:background="@drawable/background_bottom_tools_bar"
+        />
 
     <ImageView
         android:id="@+id/image_settings"
@@ -84,6 +97,7 @@
         android:id="@+id/list"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

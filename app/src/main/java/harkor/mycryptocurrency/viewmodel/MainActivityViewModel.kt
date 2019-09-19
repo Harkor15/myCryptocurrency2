@@ -110,9 +110,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                         }
                     }
                     cryptoData.value = cryptoFullInfoList
-                    amount.value = "$1010101"
-                    amount.value = "$1010101"
-                }, { error: Throwable ->
+                    //.value = "$1010101"
+                    //amount.value = "$1010101"
+                }, {
                     Toast.makeText(getApplication<Application>().applicationContext, R.string.check_internet_connection, Toast.LENGTH_SHORT).show()
                     Handler().postDelayed({
                         getPricesFromApi(cryptoNames)

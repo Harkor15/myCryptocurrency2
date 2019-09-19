@@ -7,7 +7,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:colorBackground">@color/color_background</item>
-        <item name="android:statusBarColor">@color/holo_blue_light</item>
+        <item name="android:statusBarColor">@color/dark_green_top_bar</item>
 
     </style>
 </resources>

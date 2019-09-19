@@ -62,9 +62,10 @@ class RecyclerAdapter(var dataSet: ArrayList<CryptoFullInfo>, val notifyDataDele
         val historicalPrices = "${CurrencyCalc.addSign(doubleFormat.format(historicalPrice * dataSet[position].cryptoDbInfo.amount)
                 , defaultCurrency)} (${CurrencyCalc.addSign(doubleFormat.format(historicalPrice), defaultCurrency)})"
         holder.itemView.recycler_historical_prices.text = historicalPrices
-        holder.itemView.recycler_tag.text = dataSet[position].cryptoDbInfo.symbol.toUpperCase()
+        //holder.itemView.recycler_tag.text = dataSet[position].cryptoDbInfo.symbol.toUpperCase()
+        holder.itemView.recycler_tag.text = dataSet[position].cryptoDbInfo.name
         holder.itemView.recycler_amount.text = dataSet[position].cryptoDbInfo.amount.toString()
-        holder.itemView.recycler_name.text = dataSet[position].cryptoDbInfo.name
+        //holder.itemView.recycler_name.text = dataSet[position].cryptoDbInfo.name
         val actPrice = "${dataSet[position].cryptoDbInfo.symbol.toUpperCase()} - ${CurrencyCalc.addSign(doubleFormat.format(nowPrice), defaultCurrency)}"
         holder.itemView.recycler_actual_price.text = actPrice
         val actValue = nowPrice * dataSet[position].cryptoDbInfo.amount

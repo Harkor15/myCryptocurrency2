@@ -9,11 +9,16 @@
         android:id="@+id/recycler_background_first"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/recycler_tag"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/holo_green_dark" />
+        app:srcCompat="@drawable/background_item_head" />
 
     <ImageView
         android:id="@+id/recycler_arrow"
@@ -30,13 +35,19 @@
     <TextView
         android:id="@+id/recycler_tag"
         style="@style/TextColor"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="BTC"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Safe Exchange Coin"
         android:textSize="30sp"
+        app:layout_constraintEnd_toStartOf="@+id/recycler_amount"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/recycler_arrow"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,7 +79,9 @@
                 android:id="@+id/recycler_background_second"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:src="@drawable/button2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/background_item_body"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -78,55 +91,34 @@
                 android:id="@+id/recycler_delete_ico"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="4dp"
                 android:src="@drawable/ic_delete_white_48dp"
-                app:layout_constraintBottom_toBottomOf="@+id/recycler_name"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_actual_value"
                 app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/recycler_name" />
+                app:layout_constraintEnd_toEndOf="@+id/recycler_background_second"
+                app:layout_constraintTop_toTopOf="@+id/recycler_actual_value" />
 
             <TextView
-                android:id="@+id/recycler_historical_prices"
+                android:id="@+id/recycler_actual_value"
                 style="@style/TextColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:text="$87.78 ($8778.49)"
-                app:layout_constraintStart_toEndOf="@+id/recycler_dash"
-                app:layout_constraintTop_toTopOf="@+id/recycler_dash" />
-
-            <TextView
-                android:id="@+id/recycler_name"
-                style="@style/TextColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="8dp"
-                android:text="Bitcoin"
-                android:textSize="30sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/recycler_actual_price"
-                style="@style/TextColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="BTC - $10670.96"
-                android:textSize="30sp"
-                app:layout_constraintStart_toStartOf="@+id/recycler_date"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_date" />
+                android:text="$106.71"
+                android:textSize="36sp"
+                app:layout_constraintStart_toStartOf="@+id/recycler_background_second"
+                app:layout_constraintTop_toTopOf="@+id/recycler_background_second" />
 
             <TextView
                 android:id="@+id/recycler_balance_percentage"
                 style="@style/TextColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="+21.56%"
                 android:textSize="24sp"
                 app:layout_constraintStart_toStartOf="@+id/recycler_actual_value"
@@ -145,15 +137,15 @@
                 app:layout_constraintTop_toTopOf="@+id/recycler_balance_percentage" />
 
             <TextView
-                android:id="@+id/recycler_actual_value"
+                android:id="@+id/recycler_actual_price"
                 style="@style/TextColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="$106.71"
-                android:textSize="36sp"
-                app:layout_constraintStart_toStartOf="@+id/recycler_actual_price"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_actual_price" />
+                android:text="BTC - $10670.96"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="@+id/recycler_balance_percentage"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_balance_percentage" />
 
             <TextView
                 android:id="@+id/recycler_date"
@@ -161,9 +153,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
+                android:layout_marginBottom="8dp"
                 android:text="2019.05.27"
-                app:layout_constraintStart_toStartOf="@+id/recycler_name"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_name" />
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_background_second"
+                app:layout_constraintStart_toStartOf="@+id/recycler_actual_price"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_actual_price" />
 
             <TextView
                 android:id="@+id/recycler_dash"
@@ -175,6 +169,18 @@
                 android:text="-"
                 app:layout_constraintStart_toEndOf="@+id/recycler_date"
                 app:layout_constraintTop_toTopOf="@+id/recycler_date" />
+
+            <TextView
+                android:id="@+id/recycler_historical_prices"
+                style="@style/TextColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="$87.78 ($8778.49)"
+                app:layout_constraintStart_toEndOf="@+id/recycler_dash"
+                app:layout_constraintTop_toTopOf="@+id/recycler_dash" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 

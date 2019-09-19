@@ -2,9 +2,15 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="holo_blue_light">#74d601</color>
-    <color name="color_background">#32a72c</color>
+    <color name="colorAccent">#2a6e22</color>
+    <color name="dark_green_top_bar">#437d00</color>
+    <color name="less_dark_green">#305900</color>
+    <color name="color_background">#8fc451</color>
     <color name="light_green">#8affa9</color>
     <color name="light_red">#ff9494</color>
+    <color name="navigation_bar_color">#ff9494</color>
+    <color name="background_item_body">#305900</color>
+    <color name="background_item_head_start">#4e9100</color>
+    <color name="background_item_head_end">#3b6b04</color>
+    <color name="background_item_border">#305900</color>
 </resources>
