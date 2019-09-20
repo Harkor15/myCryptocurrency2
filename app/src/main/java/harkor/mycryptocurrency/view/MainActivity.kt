@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity(), NoticeAddDialogListener, NotifyDataDel
         MobileAds.initialize(this, resources.getString(R.string.banner_ad_unit_id))
         val adRequest = AdRequest.Builder().build()
         adView.loadAd(adRequest)
-
         mainActivityViewModel!!.isDataDownloaded().observe(this, Observer { dataFlag ->
             if (!dataFlag) {
                 window.setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -38,6 +37,7 @@ class MainActivity : AppCompatActivity(), NoticeAddDialogListener, NotifyDataDel
             } else {
                 window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                 progress_bar.visibility = View.INVISIBLE
+                mainActivityViewModel!!.getAllPrice()
             }
         })
 
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), NoticeAddDialogListener, NotifyDataDel
             adapter.notifyDataSetChanged()
             mainActivityViewModel!!.calculateAmount()
         })
-        mainActivityViewModel!!.getAllPrice()
+
     }
 
     override fun addNewCrypto(name: String, amount: Double) {

@@ -2,6 +2,7 @@ package harkor.mycryptocurrency.viewmodel
 
 import android.app.Application
 import android.os.Handler
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -76,7 +77,7 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     }
 
     private fun handleError(error: Throwable) {
-        Toast.makeText(getApplication<Application>().applicationContext, "Check your internet connection", Toast.LENGTH_SHORT).show() //TODO: Make string resource
+        Toast.makeText(getApplication<Application>().applicationContext, R.string.check_internet_connection, Toast.LENGTH_SHORT).show() //TODO: Make string resource
         Handler().postDelayed({
             getDataListFromApi()
         }, 5000)
@@ -91,7 +92,9 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
                 cryptoNames += ","
                 cryptoFullInfoList.add(CryptoFullInfo(crypto, ActualPrices()))
             }
-            getPricesFromApi(cryptoNames)
+            if(ownedCrypto.isNotEmpty()){
+                getPricesFromApi(cryptoNames)
+            }
         }
     }
 
@@ -135,8 +138,10 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
         val oldDatabaseFile = getApplication<Application>().getDatabasePath("Cryptocurrency.db")
         if (oldDatabaseFile.exists()) {
             oldDatabaseFile.delete()
+            Log.d("MyCrypoto", "Old database deleted!")
         }
     }
+
 
     fun addNewCrypto(name: String, amount: Double) {
         GlobalScope.launch {

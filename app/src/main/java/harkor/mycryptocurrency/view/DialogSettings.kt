@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.DialogFragment
-import harkor.mycryptocurrency.R
 import harkor.mycryptocurrency.services.SharedPref
 import kotlinx.android.synthetic.main.settings_dialog.view.*
+import android.content.Intent
+import android.net.Uri
+import harkor.mycryptocurrency.R
+
 
 class DialogSettings(val notifyCurrencyChange: NotifyCurrencyChange) : DialogFragment() {
     lateinit var dialogView: View
@@ -23,7 +26,10 @@ class DialogSettings(val notifyCurrencyChange: NotifyCurrencyChange) : DialogFra
                 3 -> dialogView.radio_pln.isChecked = true
                 4 -> dialogView.radio_btc.isChecked = true
             }
-
+            dialogView.settings_privacy_policy.setOnClickListener{
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://my-cryptocurrency.flycricket.io/privacy.html"))
+                startActivity(browserIntent)
+            }
             dialogView.settings_cancel.setOnClickListener {
                 dialog.cancel()
             }
