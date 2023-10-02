@@ -3,6 +3,9 @@ package harkor.mycryptocurrency.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
@@ -12,11 +15,11 @@ import harkor.mycryptocurrency.services.AppDataListDatabase
 import harkor.mycryptocurrency.services.CurrencyCalc
 import harkor.mycryptocurrency.services.SharedPref
 import harkor.mycryptocurrency.view.NotifyDataDelete
-import kotlinx.android.synthetic.main.recycler_view_item.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.w3c.dom.Text
 import java.text.DecimalFormat
 
 class RecyclerAdapter(var dataSet: ArrayList<CryptoFullInfo>, val notifyDataDelete: NotifyDataDelete) : RecyclerView.Adapter<RecyclerAdapter.RecyclerViewHolder>() {
@@ -61,40 +64,40 @@ class RecyclerAdapter(var dataSet: ArrayList<CryptoFullInfo>, val notifyDataDele
         val doubleFormat = DecimalFormat("0.00")
         val historicalPrices = "${CurrencyCalc.addSign(doubleFormat.format(historicalPrice * dataSet[position].cryptoDbInfo.amount)
                 , defaultCurrency)} (${CurrencyCalc.addSign(doubleFormat.format(historicalPrice), defaultCurrency)})"
-        holder.itemView.recycler_historical_prices.text = historicalPrices
+        holder.itemView.findViewById<TextView>(R.id.recycler_historical_prices).text = historicalPrices
         //holder.itemView.recycler_tag.text = dataSet[position].cryptoDbInfo.symbol.toUpperCase()
-        holder.itemView.recycler_tag.text = dataSet[position].cryptoDbInfo.name
-        holder.itemView.recycler_amount.text = dataSet[position].cryptoDbInfo.amount.toString()
+        holder.itemView.findViewById<TextView>(R.id.recycler_tag).text = dataSet[position].cryptoDbInfo.name
+        holder.itemView.findViewById<TextView>(R.id.recycler_amount).text = dataSet[position].cryptoDbInfo.amount.toString()
         //holder.itemView.recycler_name.text = dataSet[position].cryptoDbInfo.name
-        val actPrice = "${dataSet[position].cryptoDbInfo.symbol.toUpperCase()} - ${CurrencyCalc.addSign(doubleFormat.format(nowPrice), defaultCurrency)}"
-        holder.itemView.recycler_actual_price.text = actPrice
+        val actPrice = "${dataSet[position].cryptoDbInfo.symbol.uppercase()} - ${CurrencyCalc.addSign(doubleFormat.format(nowPrice), defaultCurrency)}"
+        holder.itemView.findViewById<TextView>(R.id.recycler_actual_price).text = actPrice
         val actValue = nowPrice * dataSet[position].cryptoDbInfo.amount
         val percentageDiff = (nowPrice * 100) / historicalPrice - 100
         var percentageDiffStr = doubleFormat.format(percentageDiff) + "%"
         if (percentageDiff > 0) {
-            percentageDiffStr = "+" + percentageDiffStr
-            holder.myView.recycler_balance_percentage.setTextColor(greenColor!!)
-            holder.myView.recycler_balance_value.setTextColor(greenColor!!)
+            percentageDiffStr =     "+$percentageDiffStr"
+            holder.myView.findViewById<TextView>(R.id.recycler_balance_percentage).setTextColor(greenColor!!)
+            holder.myView.findViewById<TextView>(R.id.recycler_balance_value).setTextColor(greenColor!!)
         } else {
-            holder.myView.recycler_balance_percentage.setTextColor(redColor!!)
-            holder.myView.recycler_balance_value.setTextColor(redColor!!)
+            holder.myView.findViewById<TextView>(R.id.recycler_balance_percentage).setTextColor(redColor!!)
+            holder.myView.findViewById<TextView>(R.id.recycler_balance_value).setTextColor(redColor!!)
         }
-        holder.itemView.recycler_balance_percentage.text = percentageDiffStr
+        holder.itemView.findViewById<TextView>(R.id.recycler_balance_percentage).text = percentageDiffStr
         val diff = actValue - historicalPrice * dataSet[position].cryptoDbInfo.amount
         val diffStr = "(${CurrencyCalc.addSign(doubleFormat.format(diff), defaultCurrency)})"
-        holder.itemView.recycler_balance_value.text = diffStr
-        holder.itemView.recycler_actual_value.text = CurrencyCalc.addSign(doubleFormat.format(actValue), defaultCurrency)
-        holder.itemView.recycler_date.text = dataSet[position].cryptoDbInfo.date
+        holder.itemView.findViewById<TextView>(R.id.recycler_balance_value).text = diffStr
+        holder.itemView.findViewById<TextView>(R.id.recycler_actual_value).text = CurrencyCalc.addSign(doubleFormat.format(actValue), defaultCurrency)
+        holder.itemView.findViewById<TextView>(R.id.recycler_date).text = dataSet[position].cryptoDbInfo.date
         if (dataSet[position].expanded) {
-            holder.myView.recycler_details.visibility = View.VISIBLE
+            holder.myView.findViewById<LinearLayout>(R.id.recycler_details).visibility = View.VISIBLE
         } else {
-            holder.myView.recycler_details.visibility = View.GONE
+            holder.myView.findViewById<LinearLayout>(R.id.recycler_details).visibility = View.GONE
         }
         holder.myView.setOnClickListener {
             dataSet[position].expanded = !dataSet[position].expanded
             notifyItemChanged(position)
         }
-        holder.myView.recycler_delete_ico.setOnClickListener {
+        holder.myView.findViewById<ImageView>(R.id.recycler_delete_ico).setOnClickListener {
             GlobalScope.launch {
                 val db = Room.databaseBuilder(holder.myView.context,
                         AppDataListDatabase::class.java, "CryptoDataClassEntity.db"
